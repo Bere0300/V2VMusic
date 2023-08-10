@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block css %}
+{{ parent() }}
+<link rel="stylesheet" href="{{asset('CSS/sinscrire.css')}}">
+{% endblock %}
+
+{% block title %}Importation{% endblock %}
+
+{% block body %}
+
+<div class='main'>
+      
+    
+        {{ form_start(formMusique) }}
+            <h1>Importation</h1>
+            {{ form_row(formMusique.photo) }}
+            {{ form_row(formMusique.fichier) }}
+            {{ form_row(formMusique.titre) }}
+            {{ form_row(formMusique.nom) }}
+            {{ form_row(formMusique.genre) }}
+            <button type="submit" class="btn">Valider</button>
+        {{ form_end(formMusique) }}
+ 
+
+</div>
+
+{% endblock %}

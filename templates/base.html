@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block css %}
+        <link rel="stylesheet" href="{{asset('CSS/style.css')}}">
+    {% endblock %}
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <header>
+        {% set genres = genre_repository.findAll() %}
+        {% set categories = categorie_repository.findAll() %}
+        <div id="image">
+          <a href="{{path('app_home')}}"><img src="{{ asset('img/V2VMUSICLOGO32.png') }}" alt="logo"></a> 
+          <h2>Bienvenue
+          {% if app.user %}
+            {{app.user.prenom ~ ' ' ~ app.user.nom}}          
+          {% endif %}</h2>
+        </div>
+        
+        <div id="bouton">
+        {% if app.user %}
+             <a href="{{path('app_logout')}}"><button >Déconnexion </button></a>
+                {% if app.user.profil == 1 %}
+                    <a href="{{path('app_artiste')}}"><button >Mon Profil </button></a>
+                {% else %}
+                    <a href="{{path('app_auditeur')}}"><button >Mon Profil </button></a>
+                {% endif %}
+             
+        {% else %}
+             <a href="{{path('app_connexion')}}"><button >Connexion </button></a>
+        {% endif %}
+           
+        </div>
+        
+    </header>
+    <nav>
+        <ul>
+            <li class="menu">
+                <a href="{{path('app_home')}}"><img class="home"src="{{asset('img/home.png')}}" alt="home" ></a> 
+            </li>
+            {% for categorie in categories %}
+            <li class="menu-deroulant">
+                <a href="#">{{categorie.nom}}</a>
+                <ul class = "sous-menu">
+                {% for genre in categorie.genres %}
+                      <li> <a href = "{{path('app_genre_view' , {id:genre.id})}}"> {{genre.nom}}</a></li>
+                {% endfor %}
+                </ul>      
+            </li>
+            {% endfor %}
+            <li>
+                <a href="{{path('app_propos')}}" > A Propos </a>
+            </li>
+            <li class="menu-deroulant">
+                <a href="#">Admin</a> 
+                 <ul class = "sous-menu">
+                    <li> <a href = "{{path('app_genre')}}">Gestion Genres</a></li>
+                    <li> <a href = "{{path('app_add_categorie')}}">Gestion Catégories</a></li>
+                    <li> <a href = "#">Gestion Musiques</a></li>
+                    <li> <a href = "#">Gestion Utilisateurs</a></li>
+                </ul>
+            </li>
+            <li class="bouton">
+                <input type="search" id="rechercher" placeholder="Recherche...">
+                <button>Valider</button>
+                
+            </li>           
+        </ul>
+    </nav>
+
+    <main>
+        {% block body %} {% endblock %}
+    </main>
+
+         <footer>
+            <nav>
+                <ul> 
+                    <li class="menu">
+                        <a href="#">Droit</a>
+                    </li>
+                    <li class="menu">
+                        <a href="{{path('app_contact')}}">Nous Contacter</a>
+                    </li>
+                    <li class="menu-deroulant">
+                        <a href="#">Réseau sociaux</a>
+                        <ul class = "sous-menu">
+                            <div class=" image"> 
+                                <li > 
+                                    <a href = "https://instagram.com/v_2_vmusic?igshid=ZDdkNTZiNTM=" > <img src="{{asset('img/instagram.png')}}">
+                                        <div class="text"><figcaption> Instagram </figcaption> </div>
+                                    </a>
+                                </li>
+                            </div>
+                            <div class=" image"> 
+                                <li > 
+                                    <a href = "#" > <img src="{{asset('img/Facebook.png')}}">
+                                        <div class="text"><figcaption> Facebook </figcaption> </div>
+                                    </a>
+                                </li>
+                            </div>
+                        </ul>  
+                    </li>       
+                </ul>
+            </nav>
+        </footer>
+
+        {% block js %}{% endblock %}
+
+
+    
+</body>
+</html>

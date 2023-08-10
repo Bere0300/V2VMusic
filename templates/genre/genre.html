@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Les genres{% endblock %}
+
+{% block css %}
+{{ parent() }}
+<link rel="stylesheet" href="{{asset('CSS/genre.css')}}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+{% endblock %}
+
+{% block body %}
+
+  <h1 >Listes des genres </h1>
+  <br>
+  <table >
+      <tr>
+        <th scope="col" >Nom du genre </th>
+        <th scope="col">Slug Genre </th>
+        <th scope="col">Modifier</th>
+        <th scope="col" >Supprimer</th>
+      </tr>
+      {% for genre in genres %}
+      <tr >
+        <td>{{genre.nom}}</td>
+        <td>{{genre.slug}}</td>
+        <td><a href="{{path('app_update_genre', {id: genre.id})}}"><i class="fa fa-edit" style="font-size:36px; color:black"></i></a></td>
+        <td><a href="{{path('app_delete_genre', {id: genre.id})}}" onClick="return confirm('êtes-vous sur de vouloir supprimer?')"><i class="fa fa-trash" style="font-size:36px; color:black" ></i></a></td>
+      </tr>
+      {% endfor %}
+  </table>
+
+
+<h1>Ajouter un genre</h1>
+<div class="main">
+
+{{ form_start(formGenre) }}
+  {{ form_widget(formGenre) }}
+{{ form_end(formGenre) }}
+
+</div>
+
+{% endblock %}

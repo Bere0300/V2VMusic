@@ -1,0 +1,87 @@
+*
+{
+    margin: 0px;
+    padding: 0px;
+}
+
+.main{
+    flex-direction: column;
+    display: flex;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+/* .container {
+    max-width: 720px;
+    margin: 0px auto;
+    width: 100%;
+  } */
+
+form{
+width: 620px;
+flex-direction: column;
+display: flex;
+align-self: center;
+background-color:  rgb(242, 242, 242);
+border : 2px solid black;
+border-radius: 10px;
+box-shadow: 3px 3px 3px black;
+padding: 20px;
+}
+.btn{
+    border-radius: 20px;
+    padding: 2px;
+    margin-top: 30px;
+    width: 100px;
+    color: black;
+    font-weight: bold;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    display:flex;
+    align-self: center;
+    margin-bottom: 15px;
+}  
+h1{
+    background-color: rgb(242, 242, 242) ;
+    text-align: center;
+    color: black;
+    padding-bottom: 50px;
+    font-style: italic;
+}
+div
+{
+display: flex;
+flex-direction: column;
+margin-top: 20px;
+}
+label {
+    background-color: rgb(242, 242, 242);
+    font-size: 20px;
+    color: black;
+    font-weight: bold;
+    margin-right: 50px;
+}
+input{
+    border-radius: 5px;
+    padding-left: 5px;
+}
+.a{
+    text-decoration: none;
+    color: black;
+    display:flex;
+    align-self: center;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+
+.choix{
+    margin-bottom: 10px;
+    margin-left:10px; 
+} 
+#registration_form_genre, #registration_form_date_de_naissance{
+   display: flow;
+}
+
+ 

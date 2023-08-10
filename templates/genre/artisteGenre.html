@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% block css %}
+{{parent()}}
+<link rel="stylesheet" href="CSS/artistepage.css">
+{% endblock %}
+
+{% block title %}RAP{% endblock %}
+
+{% block body %}
+<div class="haut">
+    <div class="choix">
+        <select class="trier">
+            <option selected>Trier Par</option>
+            <option value="1">Nom A-Z</option>
+            <option value="2">Nom Z-A</option>
+            <option value="3">Plus aimé</option>
+            <option value="4">Vues</option>
+        </select>
+    </div>
+    <div class="titre">
+            <h2> Artistes {{genre.nom}}
+            </h2>
+    </div>
+</div>
+
+    <div class="rap">
+        <figure>
+            <img src="{{asset('img/profil.png')}}" alt="artiste 1">
+            <figcaption>LKD</figcaption>
+        </figure>
+        <figure>
+            <img src="{{asset('img/profil.png')}}"alt="artiste 2">
+            <figcaption>ISTA</figcaption>
+        </figure>
+        <figure>
+            <img src="{{asset('img/profil.png')}}"alt="artiste 3">
+            <figcaption>Artiste 3</figcaption>
+        </figure>
+        <figure>
+            <img src="{{asset('img/profil.png')}}"alt="artiste 4">
+            <figcaption>Artiste 4</figcaption> 
+        </figure>
+        <figure>
+            <img src="{{asset('img/profil.png')}}"alt="artiste 3">
+            <figcaption>Artiste 3</figcaption>
+        </figure>
+        <figure>
+            <img src="{{asset('img/profil.png')}}"alt="artiste 4">
+            <figcaption>Artiste 4</figcaption> 
+        </figure>
+    </div>
+    <div class="rap">
+        <figure>
+            <img src="{{asset('img/profil.png')}}" alt="artiste 1">
+            <figcaption>LKD</figcaption>
+        </figure>
+        <figure>
+            <img src="{{asset('img/profil.png')}}"alt="artiste 2">
+            <figcaption>ISTA</figcaption>
+        </figure>
+        <figure>
+            <img src="{{asset('img/profil.png')}}"alt="artiste 3">
+            <figcaption>Artiste 3</figcaption>
+        </figure>
+        <figure>
+            <img src="{{asset('img/profil.png')}}"alt="artiste 4">
+            <figcaption>Artiste 4</figcaption> 
+        </figure>
+        <figure>
+            <img src="{{asset('img/profil.png')}}"alt="artiste 3">
+            <figcaption>Artiste 3</figcaption>
+        </figure>
+        <figure>
+            <img src="{{asset('img/profil.png')}}"alt="artiste 4">
+            <figcaption>Artiste 4</figcaption> 
+        </figure>
+    </div>
+    <div class="rap">
+        <figure>
+            <img src="{{asset('img/profil.png')}}" alt="artiste 1">
+            <figcaption>LKD</figcaption>
+        </figure>
+        <figure>
+            <img src="{{asset('img/profil.png')}}"alt="artiste 2">
+            <figcaption>ISTA</figcaption>
+        </figure>
+        <figure>
+            <img src="{{asset('img/profil.png')}}"alt="artiste 3">
+            <figcaption>Artiste 3</figcaption>
+        </figure>
+        <figure>
+            <img src="{{asset('img/profil.png')}}"alt="artiste 4">
+            <figcaption>Artiste 4</figcaption> 
+        </figure>
+        <figure>
+            <img src="{{asset('img/profil.png')}}"alt="artiste 3">
+            <figcaption>Artiste 3</figcaption>
+        </figure>
+        <figure>
+            <img src="{{asset('img/profil.png')}}"alt="artiste 4">
+            <figcaption>Artiste 4</figcaption> 
+        </figure>
+    </div>
+    <div class="rap">
+        <figure>
+            <img src="{{asset('img/profil.png')}}" alt="artiste 1">
+            <figcaption>LKD</figcaption>
+        </figure>
+        <figure>
+            <img src="{{asset('img/profil.png')}}"alt="artiste 2">
+            <figcaption>ISTA</figcaption>
+        </figure>
+        <figure>
+            <img src="{{asset('img/profil.png')}}"alt="artiste 3">
+            <figcaption>Artiste 3</figcaption>
+        </figure>
+        <figure>
+            <img src="{{asset('img/profil.png')}}"alt="artiste 4">
+            <figcaption>Artiste 4</figcaption> 
+        </figure>
+        <figure>
+            <img src="{{asset('img/profil.png')}}"alt="artiste 3">
+            <figcaption>Artiste 3</figcaption>
+        </figure>
+        <figure>
+            <img src="{{asset('img/profil.png')}}"alt="artiste 4">
+            <figcaption>Artiste 4</figcaption> 
+        </figure>
+    </div>
+    <div class="rap">
+        <figure>
+            <img src="{{asset('img/profil.png')}}" alt="artiste 1">
+            <figcaption>LKD</figcaption>
+        </figure>
+        <figure>
+            <img src="{{asset('img/profil.png')}}"alt="artiste 2">
+            <figcaption>ISTA</figcaption>
+        </figure>
+        <figure>
+            <img src="{{asset('img/profil.png')}}"alt="artiste 3">
+            <figcaption>Artiste 3</figcaption>
+        </figure>
+        <figure>
+            <img src="{{asset('img/profil.png')}}"alt="artiste 4">
+            <figcaption>Artiste 4</figcaption> 
+        </figure>
+        <figure>
+            <img src="{{asset('img/profil.png')}}"alt="artiste 3">
+            <figcaption>Artiste 3</figcaption>
+        </figure>
+        <figure>
+            <img src="{{asset('img/profil.png')}}"alt="artiste 4">
+            <figcaption>Artiste 4</figcaption> 
+        </figure>
+    </div>
+{% endblock %}
