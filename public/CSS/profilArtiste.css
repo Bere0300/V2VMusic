@@ -6,13 +6,15 @@
     align-items: center;
 }
 #profil{
-    width: 150px;
+    width: 200px;
+    height: 200px;
+    border-radius: 1rem;
 }
 .haut{
     display: flex;
     align-items: center;
     flex-direction: column;
-    margin-top: 10px;
+    margin-top: 30px;
 }
 .haut p{
     width: 500px;
@@ -76,13 +78,18 @@
     margin: auto;
     box-sizing: border-box;
     height: 170px;
+    width: 20rem;
   }
   
-  figure {
+figure {
     width: 120px;
     height: 120px;
     margin : 10px;
     text-align: center;
+}
+figure img{
+  width: 120px;
+  height: 120px;
 }
 figcaption
 {
@@ -116,7 +123,7 @@ overflow:visible;
 background:rgba(255 , 255, 255,0.3);
 position:absolute;
 top:22rem;
-bottom:-9rem;
+bottom:-11rem;
 left:0;
 width:60px;
 overflow:hidden;
@@ -207,5 +214,3 @@ padding:0;
 color:#fff;
 background-color:#000000;
 }
-
-

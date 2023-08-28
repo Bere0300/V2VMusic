@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base.html.twig" %}
 
 {% block title %}Mon Profil{% endblock %}
 
@@ -31,10 +31,10 @@
                     
                 </li>
                       <li>
-                    <a href="#">
+                    <a href="{{path('app_all_musique', {id: app.user.id})}}">
                         <i class="fa fa fa-music fa-2x"></i>
                         <span class="nav-text">
-                          Mes musiques
+                          Gestion des musiques
                         </span>
                     </a>
                 </li>
@@ -57,7 +57,7 @@
                    
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{path('app_user_delete', {id: app.user.id})}}">
                         <i class="fa fa-trash fa-2x"></i>
                         <span class="nav-text">
                           Supprimer profil
@@ -65,80 +65,30 @@
                     </a>
                 </li>
             </ul>
-        </nav>
-<div class='haut'>
-    <div id="pseudo">
-                <img id="profil"src="{{asset('img/profil.png')}}" alt="profil">
-            </div>
-            <div class='texte'> 
-                <h2>{{app.user.pseudo}}</h2>
-                <p> Biographie :  Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi modi cupiditate, aspernatur, soluta cum fuga quae blanditiis consequuntur amet, quam quidem
-                    facilis voluptates id natus reprehenderit ex harum voluptatibus ipsum? Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro cupiditate, delectus qui corrupti minima 
-                    doloremque aliquam odio ab pariatur repellendus nemo illo voluptas natus. 
-                    Harum odio labore error ut quia. </p>   
-            </div>    
+    </nav>
+    <div class='haut'>
+        <div id="pseudo">
+                <img id="profil"src="{{asset('photo/profil/' ~ app.user.photo)}}" alt="{{app.user.photo}}" width= "200" heigth="200">
         </div>
-        <h2> Musiques</h2>
+        <div class='texte'> 
+            <h2>{{app.user.pseudo}}</h2>
+            <p> Biographie : Lorem ipsum dolor sit amet consectetur, adipisicing elit. Et quibusdam cum iusto quod. Odit inventore sunt repudiandae, deserunt 
+            quae voluptatum debitis necessitatibus eos assumenda quod dicta alias non at consectetur.</p>   
+        </div>    
+    </div>
+        <h2> Mes Musiques</h2>
         <br/>
         <div id="wrapper">
             <div id="carousel">
                 <div id="content">
-                    <figure>
-                        <a href="audio/AUD-20230224-WA0000.mp3">
-                            <img src="{{asset('img/play1.png')}}" alt="morceaux 1" onclick="lancer_son();">
-                            <figcaption> LKD Ft ISTA - KIL</figcaption>              
-                        </a>
-                    </figure>
-                    <figure>
-                        <a href="audio/AUD-20230224-WA0000.mp3">
-                            <img src="{{asset('img/play1.png')}}" alt="morceaux 1">
-                            <figcaption> LKD Ft ISTA - KIL</figcaption>              
-                        </a>
-                    </figure>
-                    <figure>
-                        <a href="audio/bitch complet.mp3">
-                            <img src="{{asset('img/play1.png')}}"alt="morceaux 2">
-                            <figcaption>ISTA - BITCH</figcaption>
-                        </a>
-                    </figure>
-                    <figure>
-                        <a href="audio/Ista naligiyo.mp3">
-                            <img src="{{asset('img/play1.png')}}"alt="morceaux 3">
-                            <figcaption>ISTA - NALIGIYO</figcaption>
-                        </a>
-                    </figure>
-                    <figure>
-                        <img src="{{asset('img/play1.png')}}"alt="morceaux 4">
-                        <figcaption>morceaux 4</figcaption> 
-                    </figure>
-                    <figure>
-                        <a href="audio/AUD-20230224-WA0000.mp3">
-                            <img src="{{asset('img/play1.png')}}" alt="morceaux 1" onclick="lancer_son();">
-                            <figcaption> LKD Ft ISTA - KIL</figcaption>              
-                        </a>
-                    </figure>
-                    <figure>
-                        <a href="audio/AUD-20230224-WA0000.mp3">
-                            <img src="{{asset('img/play1.png')}}" alt="morceaux 1">
-                            <figcaption> LKD Ft ISTA - KIL</figcaption>              
-                        </a>
-                    </figure>
-                    <figure>
-                        <a href="audio/bitch complet.mp3">
-                            <img src="{{asset('img/play1.png')}}"alt="morceaux 2">
-                            <figcaption>ISTA - BITCH</figcaption>
-                        </a>
-                    </figure>
-                    <figure>
-                        <a href="audio/Ista naligiyo.mp3">
-                            <img src="{{asset('img/play1.png')}}"alt="morceaux 3">
-                            <figcaption>ISTA - NALIGIYO</figcaption>
-                        </a>
-                    </figure>
-                    <figure>
-                        <img src="{{asset('img/play1.png')}}"alt="morceaux 4">
-                        <figcaption>morceaux 4</figcaption> 
-                    </figure>
+                    {% for musique in app.user.musiques %}
+                        <figure>
+                            <a href="{{asset('fichier/musique/' ~ musique.fichier)}}">
+                                <img src="{{asset('photo/musique/' ~ musique.photo)}}" alt="{{musique.nom}}" onclick="lancer_son();">
+                                <figcaption> {{musique.nom}} - {{musique.titre}}</figcaption>              
+                            </a>
+                        </figure>
+                    {% endfor %}
                 </div>
             </div>
             <button id="prev">
@@ -172,8 +122,11 @@
             </div>
         </div>
         
-    </div>        
+</div>        
     
 {% endblock %}
 
 {% block js %} <script src="{{asset('js/carousel.js')}}"> </script>{% endblock %}
+
+
+

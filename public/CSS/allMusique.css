@@ -1,0 +1,48 @@
+h1{
+    text-align: center;
+    margin-top: 30px;
+    font-size: 40px;
+}
+.main{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.container{
+    display: flex;
+    justify-content: center;
+}
+figure {
+    width: 120px;
+    height: 120px;
+    margin : 40px;
+    text-align: center;
+}
+figure img{
+    width: 120px;
+    height: 120px;
+}
+figcaption
+{
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    color: black;
+    margin-bottom: 10px;
+
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+
+.edit, .delete{
+    width: 80px;
+    font-size: 15px;
+    padding: 3px;
+    margin-bottom: 5px;
+}
+.edit{
+    background-color: rgb(62, 62, 255);
+}
+.delete{
+    background-color: red;
+}

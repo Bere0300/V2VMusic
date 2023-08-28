@@ -1,8 +1,8 @@
-{% extends 'base.html' %}
+{% extends 'base.html.twig' %}
 
 {% block css %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{asset('CSS/sinscrire.css')}}">
+    <link rel="stylesheet" href="{{asset('CSS/form.css')}}">
 {% endblock %}
 
 {% block title %} Inscription{% endblock %}
@@ -23,10 +23,12 @@
                     {{ form_row(registrationForm.prenom) }}
                     {{ form_row(registrationForm.date_de_naissance)}}
                     {{ form_row(registrationForm.email)}}
-                    {{ form_row(registrationForm.plainPassword, { label :"Mot de passe"} ) }}
+                    {{ form_row(registrationForm.plainPassword, { label :"Mot de passe *"} ) }}
+                    {{ form_row(registrationForm.photo) }}
                     {{ form_row(registrationForm.pseudo) }}
                     {{ form_row(registrationForm.profil) }}
                 <button type="submit" class="btn">Valider</button>
+                <p style="color:red">* Obligatoire </p>
             {{ form_end(registrationForm) }}
 </div>
 {% endblock %}

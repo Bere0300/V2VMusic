@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Repository\MusiqueRepository;
+use App\Repository\UserRepository;
+use Doctrine\ORM\Query\Expr\Func;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,10 +12,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProfilController extends AbstractController
 {
     #[Route('/profil_Artiste', name: 'app_artiste')]
-    public function index(): Response
+    public function index(MusiqueRepository $repo): Response
     {
+        $musiques = $repo->findAll();
         return $this->render('profil/profilArtiste.html', [
-            'controller_name' => 'ProfilController',
+            'musiques' => $musiques,
         ]);
     }
     #[Route('/profil_Auditeur', name: 'app_auditeur')]
@@ -22,5 +26,10 @@ class ProfilController extends AbstractController
             'controller_name' => 'ProfilController',
         ]);
     }
+
+
+
+  
+ 
 
 }

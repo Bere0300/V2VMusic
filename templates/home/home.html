@@ -1,0 +1,185 @@
+{% extends "base.html.twig" %}
+
+    {% block css %}
+    {{parent()}}
+    <link rel="stylesheet" href="{{asset('CSS/index.css')}}">
+    {% endblock %}
+
+     {% block title %}V2VMusic,votre musique à volonté {% endblock %}
+     
+        
+        {% block body %}
+    <div class="main">
+        <h2> Nos Artistes du moment </h2>
+        <br/>
+            <div id="wrapper">
+                <div id="carousel">
+                    <div id="content">
+                    <figure>
+                            <img src="{{asset('img/profil.png')}}" alt="artiste 1">
+                            <figcaption>LKD</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="{{asset('img/profil.png')}}"alt="artiste 2">
+                            <figcaption>ISTA</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="{{asset('img/profil.png')}}"alt="artiste 3">
+                            <figcaption>Artiste 3</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="{{asset('img/profil.png')}}"alt="artiste 4">
+                            <figcaption>Artiste 4</figcaption> 
+                        </figure>
+                    <figure>
+                            <img src="{{asset('img/profil.png')}}" alt="artiste 1">
+                            <figcaption>LKD</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="{{asset('img/profil.png')}}"alt="artiste 2">
+                            <figcaption>ISTA</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="{{asset('img/profil.png')}}"alt="artiste 3">
+                            <figcaption>Artiste 3</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="{{asset('img/profil.png')}}"alt="artiste 4">
+                            <figcaption>Artiste 4</figcaption> 
+                        </figure>
+                        <figure>
+                            <img src="{{asset('img/profil.png')}}"alt="artiste 3">
+                            <figcaption>Artiste 3</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="{{asset('img/profil.png')}}"alt="artiste 4">
+                            <figcaption>Artiste 4</figcaption> 
+                        </figure>
+                    <figure>
+                            <img src="{{asset('img/profil.png')}}" alt="artiste 1">
+                            <figcaption>LKD</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="{{asset('img/profil.png')}}"alt="artiste 2">
+                            <figcaption>ISTA</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="{{asset('img/profil.png')}}"alt="artiste 3">
+                            <figcaption>Artiste 3</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="{{asset('img/profil.png')}}"alt="artiste 4">
+                            <figcaption>Artiste 4</figcaption> 
+                        </figure>
+                    </div>
+                </div>
+                <button id="prev">
+                    <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    >
+                    <path fill="none" d="M0 0h24v24H0V0z" />
+                    <path d="M15.61 7.41L14.2 6l-6 6 6 6 1.41-1.41L11.03 12l4.58-4.59z" />
+                    </svg>
+                </button>
+                <button id="next">
+                    <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    >
+                    <path fill="none" d="M0 0h24v24H0V0z" />
+                    <path d="M10.02 6L8.61 7.41 13.19 12l-4.58 4.59L10.02 18l6-6-6-6z" />
+                    </svg>
+                </button>
+            </div>
+    
+            <h2> Dernières sorties </h2>
+            <br/>
+                <div id='wrapper'>
+                    <div id= "carousel">
+                        <div id="content">
+                            <figure>
+                                <a href="audio/AUD-20230224-WA0000.mp3">
+                                    <img src="{{asset('img/play1.png')}}" alt="morceaux 1" onclick="lancer_son();">
+                                    <figcaption> LKD Ft ISTA - KIL</figcaption>              
+                                </a>
+                            </figure>
+                            <figure>
+                                <a href="audio/AUD-20230224-WA0000.mp3">
+                                    <img src="{{asset('img/play1.png')}}" alt="morceaux 1">
+                                    <figcaption> LKD Ft ISTA - KIL</figcaption>              
+                                </a>
+                            </figure>
+                            <figure>
+                                <a href="audio/bitch complet.mp3">
+                                    <img src="{{asset('img/play1.png')}}"alt="morceaux 2">
+                                <figcaption>ISTA - BITCH</figcaption>
+                                </a>
+                            </figure>
+                            <figure>
+                                <a href="audio/Ista naligiyo.mp3">
+                                    <img src="{{asset('img/play1.png')}}"alt="morceaux 3">
+                                <figcaption>ISTA - NALIGIYO</figcaption>
+                                </a>
+                            </figure>
+                            <figure>
+                                <img src="{{asset('img/play1.png')}}"alt="morceaux 4">
+                                <figcaption>morceaux 4</figcaption> 
+                            </figure>
+                            <figure>
+                                <a href="audio/AUD-20230224-WA0000.mp3">
+                                    <img src="{{asset('img/play1.png')}}" alt="morceaux 1">
+                                    <figcaption> LKD Ft ISTA - KIL</figcaption>              
+                                </a>
+                            </figure>
+                            <figure>
+                                <a href="audio/bitch complet.mp3">
+                                    <img src="{{asset('img/play1.png')}}"alt="morceaux 2">
+                                <figcaption>ISTA - BITCH</figcaption>
+                                </a>
+                            </figure>
+                            <figure>
+                                <a href="audio/Ista naligiyo.mp3">
+                                    <img src="{{asset('img/play1.png')}}"alt="morceaux 3">
+                                <figcaption>ISTA - NALIGIYO</figcaption>
+                                </a>
+                            </figure>
+                            <figure>
+                                <img src="{{asset('img/play1.png')}}"alt="morceaux 4">
+                                <figcaption>morceaux 4</figcaption> 
+                            </figure>
+                        </div>
+                    </div>
+                    <button id="prev">
+                        <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        >
+                        <path fill="none" d="M0 0h24v24H0V0z" />
+                        <path d="M15.61 7.41L14.2 6l-6 6 6 6 1.41-1.41L11.03 12l4.58-4.59z" />
+                        </svg>
+                    </button>
+                    <button id="next">
+                        <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        >
+                        <path fill="none" d="M0 0h24v24H0V0z" />
+                        <path d="M10.02 6L8.61 7.41 13.19 12l-4.58 4.59L10.02 18l6-6-6-6z" />
+                        </svg>
+                    </button>
+                </div>
+                <br/>
+    </div>
+        {% endblock %}
+
+ {% block js %}<script src="{{asset('js/carousel.js')}}"></script>{% endblock %}
+

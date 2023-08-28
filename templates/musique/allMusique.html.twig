@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des musiques{% endblock %}
+
+{% block css %}
+{{ parent() }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{asset('CSS/allMusique.css')}}">
+{% endblock %}
+
+{% block body %}
+
+<div class="main">
+    <h1>Gestion de mes musiques</h1>
+
+    <div class ="container">
+        {% for musique in app.user.musiques %}
+            <figure>
+            <a href="{{asset('fichier/musique/' ~ musique.fichier)}}">
+                <img src="{{asset('photo/musique/' ~ musique.photo)}}" alt="{{musique.photo}}">
+                <figcaption> {{musique.nom}} - {{musique.titre}}</figcaption>              
+            </a>
+            <div class='btn'>
+                <a href="{{path('app_update_musique', {id: musique.id})}}"><button class= 'edit'>Modifier</button></a>
+                <a href="{{path('app_delete_musique', {id: musique.id})}}" onClick="return confirm('êtes-vous sur de vouloir supprimer?')"><button class ='delete'>Suprpimer</button></a>
+            </div>
+        </figure>
+        {% endfor %}
+     </div>   
+</div>
+
+
+
+{% endblock %}

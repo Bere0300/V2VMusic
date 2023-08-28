@@ -15,8 +15,11 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class MusiqueType extends AbstractType
 {
+  
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+       
+
         $builder
             ->add('photo', FileType::class, [
                 'label'=>'Photo de couverture',
@@ -28,18 +31,20 @@ class MusiqueType extends AbstractType
                             'image/png',
                         ]
                     ])
-                ]
+                ],
+                'data_class'=>NULL
             ])
             ->add('fichier', FileType::class, [
                 'label'=> 'Choisir la musique',
                 'constraints'=> [
                     new File([
-                        'maxSize'=>'5000k',
+                        'maxSize'=>'10000k',
                         'mimeTypes'=>[
                             'audio/*'
                         ]
                     ])
-                ]
+                ],
+                'data_class'=>NULL
             ])
             ->add('titre', TextType::class)
             ->add('nom',TextType::class, [

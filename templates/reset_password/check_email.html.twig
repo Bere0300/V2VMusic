@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Envoie du lien {% endblock %}
+
+{% block css %}
+{{ parent() }}
+<link rel="stylesheet" href="{{asset("CSS/checkemail.css")}}">
+{% endblock %}
+
+{% block body %}
+
+<div class='main'> 
+    <p>
+        Si l'adresse mail entrée correspond à celle de votre compte V2VMUSIC, vous allez recevoir un mail avec un lien afin de réinitialiser votre mot de passe.
+       Ce lien expire dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+    </p>
+    <p>Si vous n'avez pas reçu le mail, regardez dans vos spam ou  <a href="{{ path('app_forgot_password_request') }}">Renvoyer</a>.</p>
+</div>
+{% endblock %}

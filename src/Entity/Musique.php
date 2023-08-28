@@ -28,6 +28,9 @@ class Musique
     #[ORM\ManyToOne(inversedBy: 'musiques')]
     private ?Genre $genre = null;
 
+    #[ORM\ManyToOne(inversedBy: 'musiques')]
+    private ?User $user = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,6 +92,18 @@ class Musique
     public function setGenre(?Genre $genre): static
     {
         $this->genre = $genre;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

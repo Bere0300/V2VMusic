@@ -1,10 +1,10 @@
-{% extends 'base.html' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Connexion{% endblock %}
 
 {% block css %}
 {{ parent() }}
-<link rel="stylesheet" href="{{asset('CSS/sinscrire.css')}}">
+<link rel="stylesheet" href="{{asset('CSS/form.css')}}">
 
 {% endblock %}
 
@@ -26,21 +26,22 @@
             value="{{ csrf_token('authenticate') }}"
         >
 
-        {#
-            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-            See https://symfony.com/doc/current/security/remember_me.html
+        
+            {# Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+            See https://symfony.com/doc/current/security/remember_me.html #}
 
-            <div class="checkbox mb-3">
+            
+       
+        <a href="{{path('app_forgot_password_request')}}"><p><u>Mot de passe oublié ?</u></p></a>
+        <div class="checkbox">
                 <label>
                     <input type="checkbox" name="_remember_me"> Remember me
                 </label>
             </div>
-        #}
-
         <button class="btn btn-lg btn-primary" type="submit">
             Connexion
         </button>
-
+        
         <p>Vous n'avez pas de compte? <a href="{{path('app_inscription')}}">S'INSCRIRE</a></p>
     </form>
 </div>

@@ -27,7 +27,7 @@ header
 #image img{
     width: 250px;
 }
-#image h2{
+#image h3{
     font-size:30px;
     margin-bottom: 15px;
     margin-top: 0;
@@ -150,8 +150,12 @@ li a
 main {
     min-height: calc(100vh - 243.95px - 60px - 60px);
 }
+.bouton {
+    display: flex;
+    align-items: center;
+}
 .bouton input{
-    margin: 20px;
+    margin: 15px;
     padding-left :10px;
     font-size: 15px;
 }
@@ -175,7 +179,16 @@ footer
 img{
     width: 120px;
 }
-
-
-
+.message{
+    font-size:20px;
+    background-color: green;
+    display: flex;
+    justify-content: center;
+}
+.error{
+    font-size:20px;
+    background-color: red;
+    display: flex;
+    justify-content: center;
+}
 

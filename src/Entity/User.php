@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'Il existe déjà un compte relié à cette adresse-mail')]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -38,14 +38,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $prenom = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date_de_naissance = null;
+
+    #[ORM\Column]
+    private ?bool $profil = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $photo = null;
+
+    #[ORM\Column(type: 'boolean')]
+    private $isVerified = false;
 
     #[ORM\Column(length: 255)]
     private ?string $pseudo = null;
 
-    #[ORM\Column]
-    private ?bool $profil = null;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Musique::class)]
+    private Collection $musiques;
+
+
+    public function __construct()
+    {
+        $this->musiques = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -153,18 +168,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPseudo(): ?string
-    {
-        return $this->pseudo;
-    }
-
-    public function setPseudo(string $pseudo): static
-    {
-        $this->pseudo = $pseudo;
-
-        return $this;
-    }
-
     public function isProfil(): ?bool
     {
         return $this->profil;
@@ -177,7 +180,70 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
 
+    public function setPhoto(string $photo): static
+    {
+        $this->photo = $photo;
 
-    
+        return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): static
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(string $pseudo): static
+    {
+        $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Musique>
+     */
+    public function getMusiques(): Collection
+    {
+        return $this->musiques;
+    }
+
+    public function addMusique(Musique $musique): static
+    {
+        if (!$this->musiques->contains($musique)) {
+            $this->musiques->add($musique);
+            $musique->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMusique(Musique $musique): static
+    {
+        if ($this->musiques->removeElement($musique)) {
+            // set the owning side to null (unless already changed)
+            if ($musique->getUser() === $this) {
+                $musique->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
 }
