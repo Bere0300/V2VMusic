@@ -53,13 +53,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $pseudo = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Musique::class)]
+    #[ORM\ManyToMany(targetEntity: Genre::class, mappedBy: 'user')]
+    private Collection $genres;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Musique::class, orphanRemoval: true)]
     private Collection $musiques;
+
+    #[ORM\ManyToMany(targetEntity: Musique::class, mappedBy: 'favoris')]
+    private Collection $favoris;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $biographie = null;
 
 
     public function __construct()
     {
+        $this->genres = new ArrayCollection();
         $this->musiques = new ArrayCollection();
+        $this->favoris = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -217,6 +228,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * @return Collection<int, Genre>
+     */
+    public function getGenres(): Collection
+    {
+        return $this->genres;
+    }
+
+    public function addGenre(Genre $genre): static
+    {
+        if (!$this->genres->contains($genre)) {
+            $this->genres->add($genre);
+            $genre->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGenre(Genre $genre): static
+    {
+        if ($this->genres->removeElement($genre)) {
+            $genre->removeUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
      * @return Collection<int, Musique>
      */
     public function getMusiques(): Collection
@@ -245,5 +283,49 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Musique>
+     */
+    public function getFavoris(): Collection
+    {
+        return $this->favoris;
+    }
+
+    public function addFavori(Musique $favori): static
+    {
+        if (!$this->favoris->contains($favori)) {
+            $this->favoris->add($favori);
+            $favori->addFavori($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavori(Musique $favori): static
+    {
+        if ($this->favoris->removeElement($favori)) {
+            $favori->removeFavori($this);
+        }
+
+        return $this;
+    }
+
+    public function getBiographie(): ?string
+    {
+        return $this->biographie;
+    }
+
+    public function setBiographie(?string $biographie): static
+    {
+        $this->biographie = $biographie;
+
+        return $this;
+    }
+
+    
+
+
+  
 
 }

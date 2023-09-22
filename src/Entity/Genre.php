@@ -27,10 +27,14 @@ class Genre
     #[ORM\OneToMany(mappedBy: 'genre', targetEntity: Musique::class)]
     private Collection $musiques;
 
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'genres')]
+    private Collection $user;
+
 
     public function __construct()
     {
         $this->musiques = new ArrayCollection();
+        $this->user = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -103,6 +107,32 @@ class Genre
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUser(): Collection
+    {
+        return $this->user;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->user->contains($user)) {
+            $this->user->add($user);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        $this->user->removeElement($user);
+
+        return $this;
+    }
+
+   
 
   
 

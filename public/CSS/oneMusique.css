@@ -1,0 +1,94 @@
+.main
+{
+    padding-top: 35px;
+    padding-bottom:35px ;
+}
+.box{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.musique{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position:absolute;
+}
+.musique img{
+    width:200px;
+    height:200px;
+}
+.circle{
+    background-image: url('../img/vinyle.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    padding: 20px;
+    width: 620px;
+    height: 620px;
+    border-radius: 50%;
+    border: 3px solid #f1f1f1;
+    animation: 1s linear infinite alternate boxMagic,
+               4s linear infinite spinning;
+
+}
+
+/*Les couleurs sont positionnés sur les axes X et Y  afin de les faire ressortir : 
+-10px sur Y et lautre sur X et pareil pour le positif, l'autre c'eset pour le flou*/
+
+@keyframes boxMagic {
+    from{
+        box-shadow: 
+        0 0 0 #feac5e,
+        0 0 0 #c779d0,
+        0 0 0 #4bc0c8,
+        0 0 0 #42db75;
+    }
+    to{
+        box-shadow: 
+        0 -15px 0 #feac5e,
+        -15px 0 0 #c779d0,
+        0 15px 0 #4bc0c8,
+        15px 0 0 #42db75;
+    }
+}
+
+@keyframes spinning {
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
+}
+
+.musique h5{
+    font-size: 30px;
+    margin:30px 0px;
+    color:rgb(255, 255, 255);
+    text-shadow: 2px 1px 3px rgb(0, 0, 0);
+}
+.button
+{
+    margin-top: 50px;
+}
+.button a{
+    margin: 40px
+}
+
+
+@media (max-width: 1200px) {
+    .musique img{
+        width: 120px;
+        height: 120px;
+    }
+    .musique h5{
+        font-size: 20px
+    }
+    .circle{
+        padding: 30px;
+        width: 320px;
+        height: 320px;
+    }
+}

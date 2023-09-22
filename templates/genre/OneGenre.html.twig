@@ -1,0 +1,57 @@
+{% extends "base.html.twig" %}
+{% block css %}
+{{parent()}}
+<link rel="stylesheet" href="{{asset('CSS/menuMusic.css')}}">
+{% endblock %}
+
+{% block title %}{{genre.nom}}{% endblock %}
+
+{% block body %}
+
+<div class='main'>
+
+        <a href="{{path('app_artiste_genre', {id: genre.id})}}"><h2>Nos Artistes 
+            {{genre.nom |upper}}
+        </h2></a>
+    
+   
+    <div class="rap">
+        <figure>
+            <img src="{{asset('img/profil.png')}}" alt="artiste 1">
+            <figcaption>LKD</figcaption>
+        </figure>
+        <figure>
+            <img src="{{asset('img/profil.png')}}"alt="artiste 2">
+            <figcaption>ISTA</figcaption>
+        </figure>
+        <figure>
+            <img src="{{asset('img/profil.png')}}"alt="artiste 3">
+            <figcaption>Artiste 3</figcaption>
+        </figure>
+        <figure>
+            <img src="{{asset('img/profil.png')}}"alt="artiste 4">
+            <figcaption>Artiste 4</figcaption> 
+        </figure>
+        <figure>
+            <img src="{{asset('img/profil.png')}}"alt="artiste 3">
+            <figcaption>Artiste 3</figcaption>
+        </figure>
+    </div>
+
+       <a href="{{path('app_musique_genre', {id: genre.id})}}"> <h2>Nos Musiques
+            {{genre.nom |upper}}
+        </h2></a>
+    
+    <div class="rap">
+        {% for musique in musiques %}
+            <figure>
+                <a href="{{path('app_oneMusique', {id: musique.id})}}">
+                    <img src="{{asset('photo/musique/' ~ musique.photo)}}" alt="{{musique.nom}}" width='120' height="120">
+                    <figcaption> {{musique.nom}} - {{musique.titre}}</figcaption>              
+                </a>
+            </figure>
+        {% endfor %} 
+    </div>
+</div>
+{% endblock %}
+

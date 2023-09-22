@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les categories{% endblock %}
+
+{% block css %}
+{{ parent() }}
+<link rel="stylesheet" href="{{asset('CSS/admin.css')}}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+{% endblock %}
+
+{% block body %}
+
+  <h1 >Listes des catégories </h1>
+  <br>
+  <table >
+      <tr>
+        <th scope="col" >Nom Categorie </th>
+        <th scope="col">Slug Categorie </th>
+        <th scope="col">Supprimer</th>
+      </tr>
+      {% for categorie in categories %}
+      <tr >
+        <td>{{categorie.nom}}</td>
+        <td>{{categorie.slug}}</td>
+        <td><a href="{{path('app_delete_categorie', {id: categorie.id})}}" onClick="return confirm('êtes-vous sur de vouloir supprimer?')"><i class="fa fa-trash" style="font-size:36px; color:black" ></i></a></td>
+      </tr>
+      {% endfor %}
+  </table>
+
+
+<h1>Ajouter une categorie</h1>
+<div class="main">
+
+  {{ form_start(formCategorie) }}
+    {{ form_row(formCategorie.nom)}}
+    <button type="submit" class="bouton">Valider</button>
+  {{ form_end(formCategorie) }}
+
+</div>
+
+{% endblock %}

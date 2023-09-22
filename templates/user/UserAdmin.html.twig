@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les Utilisateurs{% endblock %}
+
+{% block css %}
+{{ parent() }}
+<link rel="stylesheet" href="{{asset('CSS/admin.css')}}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+{% endblock %}
+
+{% block body %}
+
+  <h1 >Listes des utilisateurs </h1>
+  <br>
+  <table >
+      <tr>
+        <th scope="col" >Prénom </th>
+        <th scope="col">Nom </th>
+        <th scope="col">Pseudo</th>
+        <th scope="col">email</th>
+        <th scope="col">Roles</th>
+        <th scope="col">Roles</th>
+        <th scope="col">Supprimer</th>
+      </tr>
+      {% for user in users %}
+      <tr >
+        <td>{{user.prenom}}</td>
+        <td>{{user.nom}}</td>
+        <td>{{user.pseudo}}</td>
+        <td> {{user.email}}</td>
+        {% for unrole in user.roles %}
+         <td>{{unrole}}</td>
+        {% endfor %}
+        <td></td>
+        <td><a href="{{path('app_deleteAdmin_user', {id: user.id})}}" onClick="return confirm('êtes-vous sur de vouloir supprimer?')"><i class="fa fa-trash" style="font-size:36px; color:black" ></i></a></td>
+      </tr>
+      {% endfor %}
+  </table>
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block css %}
+{{ parent() }}
+<link rel="stylesheet" href="{{asset('CSS/admin.css')}}">
+
+{% endblock %}
+{% block body %}
+
+<div class='main'>
+<h2>Vous êtes sur le point de faire passer {{user.nom ~ ' ' ~ user.prenom}} en admin </h2>
+
+            {{ form_start(formAdmin) }}
+            {{ form_row(formAdmin.mdpForm) }}
+                <button type="submit" class="bouton">Valider</button>
+            {{ form_end(formAdmin) }}
+</div>
+
+{% endblock %}

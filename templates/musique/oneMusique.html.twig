@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block css %}
+{{ parent() }}
+<link rel="stylesheet" href="{{asset('CSS/oneMusique.css')}}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+{% endblock %}
+
+{% block body %}
+
+<div class="main">
+
+    <div class='box'>
+
+        <div class='circle'></div>
+
+        <div class="musique">
+            <img src="{{asset('photo/musique/' ~ musique.photo)}}" alt="{{musique.nom}}">
+
+            <h5>{{musique.titre}} - {{musique.nom}}</h5>
+
+            <audio controls controlsList ='nodownload'autoplay src="{{asset('fichier/musique/' ~ musique.fichier)}}"></audio>
+             <div class="button">
+                {% if is_granted('ROLE_USER') %}
+                    {% for favoris in musique.favoris %}
+                        {% if favoris.id == app.user.id %}
+                            <a href="{{path('app_retrait_favoris', {id:musique.id})}}"><i class="fa fa-heart" style='font-size: 40px; color:red'></i></a>
+                        {% else %}
+                            <a href="{{path('app_favoris', {id:musique.id})}}"><i class="fa fa-heart" style='font-size: 40px; color:white'></i></a>
+                        {% endif %}
+                    {% else %}
+                        <a href="{{path('app_favoris', {id: musique.id})}}"><i class="fa fa-heart" style='font-size: 40px; color:white'></i></a>
+                    {% endfor %}
+                {% endif %}
+                    
+                    
+                {% if app.user %}
+                    
+                        <a href="{{path('app_commentaire')}}"><i class='fa fa-comment-o' style='font-size: 40px; color:white'></i></a>
+                
+                {% endif %}
+           </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -14,10 +14,12 @@
 
             {{ form_start(formContact) }}
                 <h1>Contactez-nous</h1>
+                    {{ form_row(formContact.nom) }}
+                    {{ form_row(formContact.prenom) }}
                     {{ form_row(formContact.email) }}
                     {{ form_row(formContact.content) }}
 
-                <button type="submit" class="btn">Valider</button>
+                <button type="submit" class="button">Valider</button>
             {{ form_end(formContact) }}
 </div>
 {% endblock %}

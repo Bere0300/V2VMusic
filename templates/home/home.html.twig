@@ -1,0 +1,40 @@
+{% extends "base.html.twig" %}
+
+    {% block css %}
+    {{parent()}}
+    <link rel="stylesheet" href="{{asset('CSS/home.css')}}">
+    {% endblock %}
+
+     {% block title %}V2VMusic,votre musique à volonté {% endblock %}
+     
+        
+        {% block body %}
+    <div class="main">
+        <h2> Nos Artistes du moment </h2>
+      <div class="wrap">
+           {% for user in activeUsers %}
+                <a href="{{path('app_view_profil', {id: user.id})}}">
+                    <figure>
+                        <img src="{{asset('photo/profil/' ~ user.photo)}}" alt="{{user.photo}}" width="120" height="120">
+                        <figcaption>{{user.pseudo}}</figcaption>
+                    </figure>
+                </a>
+            {% endfor %}
+        </div>    
+    
+        <h2> Dernières sorties </h2>
+        <div class='wrap'>
+            {% for musique in musiques %}
+            <a href="{{path('app_oneMusique', {id: musique.id})}}">
+                <figure>
+                    <img src="{{asset('photo/musique/' ~ musique.photo)}}" alt="{{musique.nom}}" width='120' height="120">
+                    <figcaption> {{musique.nom}} - {{musique.titre}}</figcaption>              
+                </figure>
+            </a>
+            {% endfor %}
+        </div>    
+    </div>
+{% endblock %}
+
+
+

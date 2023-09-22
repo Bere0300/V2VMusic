@@ -56,6 +56,17 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->save($user, true);
     }
 
+    public function findByIsActive($isActive = true)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.profil = :profil')
+            ->setParameter('profil', $isActive)
+            ->orderBy('u.id', 'DESC') // Ajoutez cette ligne pour trier par ID décroissant
+            ->setMaxResults(5) // Limite le nombre de résultats à 5
+            ->getQuery()
+            ->getResult();
+    }
+ 
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

@@ -3,19 +3,12 @@
     margin: 0px;
     padding: 0px;
 }
-
 .main{
     flex-direction: column;
     display: flex;
     margin-top: 50px;
     margin-bottom: 50px;
 }
-/* .container {
-    max-width: 720px;
-    margin: 0px auto;
-    width: 100%;
-  } */
-
 form{
 width: 620px;
 flex-direction: column;
@@ -27,7 +20,7 @@ border-radius: 10px;
 box-shadow: 3px 3px 3px black;
 padding: 20px;
 }
-.btn{
+.button{
     border-radius: 20px;
     padding: 2px;
     margin-top: 30px;
@@ -48,7 +41,7 @@ h1{
     padding-bottom: 50px;
     font-style: italic;
 }
-div
+.main div
 {
 display: flex;
 flex-direction: column;
@@ -56,7 +49,7 @@ margin-top: 20px;
 }
 label {
     background-color: rgb(242, 242, 242);
-    font-size: 20px;
+    font-size: 17px;
     color: black;
     font-weight: bold;
     margin-right: 50px;
@@ -87,4 +80,10 @@ a{
 .checkbox label{
     font-size: 15px;
     font-weight: 400;
+}
+
+@media (max-width: 1200px){
+    form{
+        width: auto;
+    }
 }

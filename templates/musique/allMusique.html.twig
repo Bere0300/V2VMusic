@@ -20,7 +20,7 @@
                 <img src="{{asset('photo/musique/' ~ musique.photo)}}" alt="{{musique.photo}}">
                 <figcaption> {{musique.nom}} - {{musique.titre}}</figcaption>              
             </a>
-            <div class='btn'>
+            <div class='button'>
                 <a href="{{path('app_update_musique', {id: musique.id})}}"><button class= 'edit'>Modifier</button></a>
                 <a href="{{path('app_delete_musique', {id: musique.id})}}" onClick="return confirm('êtes-vous sur de vouloir supprimer?')"><button class ='delete'>Suprpimer</button></a>
             </div>

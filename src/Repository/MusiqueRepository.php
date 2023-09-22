@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Genre;
 use App\Entity\Musique;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Musique>
@@ -38,6 +40,11 @@ class MusiqueRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+
+
+
+
 
 //    /**
 //     * @return Musique[] Returns an array of Musique objects

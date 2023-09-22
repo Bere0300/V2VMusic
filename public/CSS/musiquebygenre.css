@@ -1,0 +1,57 @@
+.trier{
+    width: 100px;
+    padding: 5px;
+    border-radius: 10px;
+    border: 2px solid black;
+
+}
+option{
+    font-size: 15px;
+}
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.wrap{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 50px 300px 
+}
+figure {
+    width: 120px;
+    height: 120px;
+    margin : 40px;
+    text-align: center;
+}
+figure img {
+    width: 120px;
+}
+figcaption
+{
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    color: black;
+
+}
+h2{
+    margin-top: 0;
+}
+.haut{
+    display: flex;
+    margin-top: 50px;
+    justify-content: center;
+    align-items: center;
+}
+.titre{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-right: 200px;
+}
+.choix{
+    margin-right: 150px;
+}
+a{
+    text-decoration: none;
+}

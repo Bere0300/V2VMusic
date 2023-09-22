@@ -1,0 +1,33 @@
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.wrap{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px 300px 
+}
+h1{
+    text-align: center;
+    margin-top: 30px;
+}
+figure {
+    width: 120px;
+    height: 120px;
+    margin : 40px;
+    text-align: center;
+}
+figure img {
+    width: 120px;
+}
+figcaption
+{
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    color: black;
+
+}
+a{
+    text-decoration: none;
+}

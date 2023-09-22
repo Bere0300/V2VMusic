@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CategorieController extends AbstractController
 {
 
-    #[Route('/add_categorie', name: 'app_add_categorie')]
+    #[Route('/admin/categorie', name: 'app_categorie')]
 
     public function All (CategorieRepository $repo, Request $request, SluggerInterface $slugger): Response
     {        
@@ -29,10 +29,10 @@ class CategorieController extends AbstractController
             $categorie->setSlug($slugger->slug($categorie->getNom()));
             
             $repo->save($categorie,true);
-            return $this->redirectToRoute('app_add_categorie');
+            return $this->redirectToRoute('app_categorie');
         }
 
-        return $this->render('categorie/categorie.html', [
+        return $this->render('categorie/adminCategorie.html.twig', [
             'categories' => $categories,
             'formCategorie'=> $form->createView()
             
@@ -44,7 +44,7 @@ class CategorieController extends AbstractController
         $categorie = $repo->find($id);
         $repo->remove($categorie,1); 
 
-        return $this->redirectToRoute('app_add_categorie');
+        return $this->redirectToRoute('app_categorie');
     }
 
   

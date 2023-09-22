@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\ProfilType;
 use App\Security\EmailVerifier;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
@@ -28,7 +29,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/inscription', name: 'app_inscription')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserRepository $repo, SluggerInterface $slugger): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -56,9 +57,7 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $repo->save($user,1);
 
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
@@ -97,18 +96,34 @@ class RegistrationController extends AbstractController
 
         return $this->redirectToRoute('app_home');
     }
+    
     #[Route('/user_delete_{id}', name: 'app_user_delete')]
     public function delete($id, UserRepository $repoUser): Response
     {
-
         $user = $repoUser->find($id);
         $repoUser ->remove($user , 1);
         
-
        return $this->redirectToRoute('app_home');
     }
+//-------------------------------GESTION USERS EN ADMIN-------------------------------------
 
+    #[Route('admin/allUsers', name: 'app_allUsers')]
+    public function AllUser(UserRepository $repo)
+    {
+        $users= $repo->findAll();
 
+        return $this->render('user/UserAdmin.html.twig', [
+            'users'=>$users
+        ]);
+    }
 
+    #[Route('admin/delete_user_{id}', name: 'app_deleteAdmin_user')]
+    public function deleteAdmin($id, UserRepository $repoUser): Response
+    {
+        $user = $repoUser->find($id);
+        $repoUser ->remove($user , 1);
+        
+    return $this->redirectToRoute('app_allUsers');
+    }
 
 }

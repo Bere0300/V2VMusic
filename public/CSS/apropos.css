@@ -11,6 +11,7 @@ main{
     width: 900px;
     display: flex;
     flex-direction: column;
+    padding: 30px;
 }
 h1{
     margin-bottom: 40px;

@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Genre;
 use App\Form\GenreType;
+use App\Services\MusiqueService;
 use App\Repository\GenreRepository;
+use App\Repository\MusiqueRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class GenreController extends AbstractController
 {
-    #[Route('/genre', name: 'app_genre')]
+    #[Route('admin/genre', name: 'app_genre')]
     public function index(GenreRepository $repo, Request $request, SluggerInterface $slugger): Response
     {        
         $genres= $repo->findAll();
@@ -29,7 +31,7 @@ class GenreController extends AbstractController
             return $this->redirectToRoute('app_genre');
         }
 
-        return $this->render('genre/genre.html', [
+        return $this->render('genre/adminGenre.html.twig', [
             'genres' => $genres,
             'formGenre'=> $form->createView()
             
@@ -59,26 +61,35 @@ class GenreController extends AbstractController
             return $this->redirectToRoute('app_genre');
         }
 
-        return $this->render('genre/genre.html', [
+        return $this->render('genre/genre.html.twig', [
             'genre' => $genre,
             'formGenre'=> $form->createView()
             
         ]);
     }
-    #[Route('/genre_{id}', name: 'app_genre_view')]
-    public function View($id, GenreRepository $repo)
+    #[Route('/genre_musiques_{id}', name: 'app_genre_view')]
+    public function View($id, GenreRepository $repo, MusiqueRepository $musiqueRepo)
     {
         $genre= $repo->find($id);
+        $musiques = $genre->getMusiques();
+        $genres = $repo->findAll();
+        // $musiques= $musiqueRepo ->findBy([], ['genre'=> 'DESC'], 4);
 
-        return $this->render('genre/OneGenre.html', [
-            'genre'=>$genre
+        return $this->render('genre/OneGenre.html.twig', [
+            'genre'=>$genre,
+            'musiques'=>$musiques,
+            'genres'=>$genres,
         ]);
     }
     #[Route('/genre_artiste_{id}', name: 'app_artiste_genre')]
     public function artisteGenre($id, GenreRepository $repo)
     {
         $genre= $repo->find($id);
-        return $this->render('genre/artisteGenre.html', ['genre' => $genre]);
+        return $this->render('genre/artisteGenre.html.twig', ['genre' => $genre]);
     }
+
+    
+   
+ 
 
 }

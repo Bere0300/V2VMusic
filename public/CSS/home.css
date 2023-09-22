@@ -1,42 +1,40 @@
-h1{
-    text-align: center;
-    margin-top: 10px;
-    margin-bottom: 20px;
-}
-table{
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-bottom: 50px;
-}
-th, td{
-    font-size: 20px;
-}
-th{
-    padding: 30px;
-}
-tr{
-    text-align: center;
-}
-td{
-    padding: 10px;
-}
 .main{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.wrap{
+margin-top: 20px;
+display: flex;
+flex-wrap: wrap;
+margin-bottom: 50px;
+justify-content: center;
+}
+figure {
+    width: 120px;
+    height: 120px;
+    margin : 10px;
+    text-align: center;
+    margin:40px;
+}
+figcaption
+{
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    color: black;
+
+}
+a{
+  text-decoration: none;
+}
+@media (max-width: 1200px){
+  .wrap a {
+    width: 120px;
+    height: 120px;
+    margin: 30px;
     display: flex;
     justify-content: center;
-    width: 100%;
-}
-.div-text, .div-select{
-    width:200px;
-    margin-left: 20px;
-}
-.div-button{
-   padding: 5px;
-   width: 90px;
-   margin-top: 20px;
-   text-align: center;
-}
-
-.div-select{
-    margin-top: 20px;
+    flex-direction: column;
+    align-items: center;
+  }
 }

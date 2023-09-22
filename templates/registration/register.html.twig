@@ -14,7 +14,6 @@
 
 <div class='main'>
 
-
         {{ form_errors(registrationForm) }}
 
             {{ form_start(registrationForm) }}
@@ -27,7 +26,8 @@
                     {{ form_row(registrationForm.photo) }}
                     {{ form_row(registrationForm.pseudo) }}
                     {{ form_row(registrationForm.profil) }}
-                <button type="submit" class="btn">Valider</button>
+                    {{ form_row(registrationForm.genres) }}
+                <button type="submit" class="button">Valider</button>
                 <p style="color:red">* Obligatoire </p>
             {{ form_end(registrationForm) }}
 </div>

@@ -24,9 +24,6 @@ class GenreType extends AbstractType
                     'choice_label'=>'nom',
                     'attr'=>['class' => 'div-select']
                 ])
-            ->add('Valider', SubmitType::class, [
-                'attr'=>['class' => 'div-button']
-            ])
         ;
     }
 

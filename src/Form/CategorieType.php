@@ -17,9 +17,6 @@ class CategorieType extends AbstractType
             ->add('nom', TextType::class , [
             'attr' => ['class'=> 'div-text']
             ])
-            ->add('Valider', SubmitType::class, [
-                'attr'=>['class' => 'div-button']
-            ])
         ;
     }
 

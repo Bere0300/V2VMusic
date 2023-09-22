@@ -2,8 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Genre;
 use App\Entity\User;
-
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\File;
@@ -104,6 +105,12 @@ class RegistrationFormType extends AbstractType
                             'max' => 4096,
                         ]),
                     ],
+                ])
+                ->add('genres', EntityType::class, [
+                    'class'=>Genre::class,
+                    'choice_label'=> 'nom',
+                    'multiple'=> true,
+                    'expanded'=>true
                 ])
               
             ;

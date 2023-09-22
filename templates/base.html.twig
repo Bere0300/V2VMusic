@@ -7,70 +7,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{{asset('img/favicon.ico')}}" type="image/x-icon">
     {% block css %}
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@300&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{{asset('CSS/style.css')}}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     {% endblock %}
     <title>{% block title %}{% endblock %}</title>
 </head>
-<body>
-    <header>
-        {% set genres = genre_repository.findAll() %}
+<body>      
+     <header>
+       {% set genres = genre_repository.findAll() %}
         {% set categories = categorie_repository.findAll() %}
-        <div id="image">
-          <a href="{{path('app_home')}}"><img src="{{ asset('img/V2VMUSICLOGO32.png') }}" alt="logo"></a> 
-          <h3>Bienvenue
-          {% if app.user %}
-            {{app.user.prenom ~ ' ' ~ app.user.nom}}          
-          {% endif %}</h3>
+        <div class="container">
+            <input type="checkbox" name="" id="check">
+            
+            <div class="logo-container">
+               <a href="{{path('app_home')}}"><img src="{{asset('img/V2VMUSICLOGO32.png')}}" alt="logo" width="130"></a>
+               {% if app.user %}
+                <h5>Bonjour {{app.user.prenom}}</h5>
+               {% endif %}
+               
+            </div>
+
+            <div class="nav-btn">
+                <div class="nav-links">
+                    <ul>
+                        <li class="nav-link" style="--i: .6s">
+                            <a href="{{path('app_home')}}">Accueil</a>
+                        </li>
+                         {% for categorie in categories %}
+                        <li class="nav-link" style="--i: .85s">
+                            <a href="#">{{categorie.nom}}<i class="fa fa-caret-down"></i></a>
+                            <div class="dropdown">
+                                <ul>
+                                    {% for genre in categorie.genres %}
+                                        <li class="dropdown-link">
+                                            <a href="{{path('app_genre_view' , {id:genre.id})}}">{{genre.nom}}</a>
+                                        </li>
+                                    {% endfor %}
+                                    <div class="arrow"></div>
+                                </ul>
+                            </div>
+                        </li>
+                        {% endfor %}
+                        <li class="nav-link" style="--i: 1.35s">
+                            <a href="{{path('app_propos')}}">A propos</a>
+                        </li>
+                        {% if app.user and is_granted('ROLE_ADMIN') %}
+                            <li class="nav-link" style="--i: .85s">
+                                <a href="#">Admin<i class="fa fa-caret-down"></i></a>
+                                <div class="dropdown">
+                                    <ul>
+                                        <li class="dropdown-link">
+                                            <a href="{{path('app_genre')}}">Gestion des genres</a>
+                                        </li>
+                                        <li class="dropdown-link">
+                                            <a href="{{path('app_categorie')}}">Gestion des catégories</a>
+                                        </li>
+                                        <li class="dropdown-link">
+                                            <a href="{{path('app_allMusiques')}}">Gestion des musiques</a>
+                                        </li>
+                                        <li class="dropdown-link">
+                                            <a href="{{path('app_allUsers')}}">Gestion des utilisateurs</a>
+                                        </li>
+                                        <div class="arrow"></div>
+                                    </ul>
+                                </div>
+                            </li> 
+                        {% endif %}
+                    </ul>
+                </div>
+
+                <div class="log-sign" style="--i: 1.8s">
+                    {% if app.user %}
+                        <a href="{{path('app_logout')}}" class="btn transparent">Déconnexion</a>
+                        <a href="{{path('app_profil', {id:app.user.id})}}" class="btn solid">Mon profil</a>
+                    {% else %}  
+                        <a href="{{path('app_connexion')}}" class="btn transparent2">Connexion</a>
+                    {% endif %}
+                    
+                </div>
+            </div>
+
+            <div class="hamburger-menu-container">
+                <div class="hamburger-menu">
+                    <div></div>
+                </div>
+            </div>
         </div>
-        
-        <div id="bouton">
-        {% if app.user %}
-             <a href="{{path('app_logout')}}"><button >Déconnexion </button></a>
-                {% if app.user.profil == 1 %}
-                    <a href="{{path('app_artiste')}}"><button >Mon Profil </button></a>
-                {% else %}
-                    <a href="{{path('app_auditeur')}}"><button >Mon Profil </button></a>
-                {% endif %}
-             
-        {% else %}
-             <a href="{{path('app_connexion')}}"><button >Connexion </button></a>
-        {% endif %}
-           
-        </div>
-        
     </header>
-    <nav>
-        <ul>
-            <li class="menu">
-                <a href="{{path('app_home')}}"><img class="home"src="{{asset('img/home.png')}}" alt="home" ></a> 
-            </li>
-            {% for categorie in categories %}
-            <li class="menu-deroulant">
-                <a href="#">{{categorie.nom}}</a>
-                <ul class = "sous-menu">
-                {% for genre in categorie.genres %}
-                      <li> <a href = "{{path('app_genre_view' , {id:genre.id})}}"> {{genre.nom}}</a></li>
-                {% endfor %}
-                </ul>      
-            </li>
-            {% endfor %}
-            <li>
-                <a href="{{path('app_propos')}}" > A Propos </a>
-            </li>
-            <li class="menu-deroulant">
-                <a href="#">Admin</a> 
-                 <ul class = "sous-menu">
-                    <li> <a href = "{{path('app_genre')}}">Gestion Genres</a></li>
-                    <li> <a href = "{{path('app_add_categorie')}}">Gestion Catégories</a></li>
-                </ul>
-            </li>
-            <li class="bouton">
-                <input type="search" id="rechercher" placeholder="Recherche...">
-                <button>Valider</button>
-                
-            </li>           
-        </ul>
-    </nav>
     {% for message in  app.flashes("success") %}
 
         <div class='message'>
@@ -90,41 +117,20 @@
         {% block body %} {% endblock %}
     </main>
 
-         <footer>
-            <nav>
-                <ul> 
-                    <li class="menu">
-                        <a href="#">Droit</a>
-                    </li>
-                    <li class="menu">
-                        <a href="{{path('app_contact')}}">Nous Contacter</a>
-                    </li>
-                    <li class="menu-deroulant">
-                        <a href="#">Réseau sociaux</a>
-                        <ul class = "sous-menu">
-                            <div class=" image"> 
-                                <li > 
-                                    <a href = "https://instagram.com/v_2_vmusic?igshid=ZDdkNTZiNTM=" > <img src="{{asset('img/instagram.png')}}">
-                                        <div class="text"><figcaption> Instagram </figcaption> </div>
-                                    </a>
-                                </li>
-                            </div>
-                            <div class=" image"> 
-                                <li > 
-                                    <a href = "#" > <img src="{{asset('img/Facebook.png')}}">
-                                        <div class="text"><figcaption> Facebook </figcaption> </div>
-                                    </a>
-                                </li>
-                            </div>
-                        </ul>  
-                    </li>       
-                </ul>
-            </nav>
-        </footer>
+    <footer>
+    <div class='footer_titre'>
+        <h5>Mentions Légales </h5>
+        <h5>|</h5>
+        <a href="{{path('app_contact')}}"><h5>Nous contacter</h5></a>  
+    </div>
+    <div class="reseau">
+    <a href="https://www.instagram.com/v_2_vmusic/"><img src="{{asset('img/instagram.png')}}" alt="instagram" width='50'></a>
+    </div>
+       
+    </footer>
+           
 
-        {% block js %}{% endblock %}
+    {% block js %}{% endblock %}
 
-
-    
 </body>
 </html>

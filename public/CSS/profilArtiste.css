@@ -24,8 +24,10 @@
     text-align: center;
 }
 .texte p{
-    margin-top: 5px;
+    margin-top: 40px;
     margin-bottom: 20px;
+    text-align: center;
+   
 }
 
 #wrapper {
@@ -101,17 +103,14 @@ a{
 }
 
 
-.fa-2x {
-font-size: 2em;
-}
-.fa {
+.main-menu .fa {
 position: relative;
 display: table-cell;
 width: 60px;
 height: 36px;
 text-align: center;
 vertical-align: middle;
-font-size:20px;
+font-size:25px;
 }
 
 .main-menu:hover,nav.main-menu.expanded {
@@ -122,8 +121,8 @@ overflow:visible;
 .main-menu {
 background:rgba(255 , 255, 255,0.3);
 position:absolute;
-top:22rem;
-bottom:-11rem;
+top:8rem;
+bottom:1rem;
 left:0;
 width:60px;
 overflow:hidden;
@@ -213,4 +212,14 @@ padding:0;
 .main-menu li:hover>a,nav.main-menu li.active>a,.dropdown-menu>li>a:hover,.dropdown-menu>li>a:focus,.dropdown-menu>.active>a,.dropdown-menu>.active>a:hover,.dropdown-menu>.active>a:focus,.no-touch .dashboard-page nav.dashboard-menu ul li:hover a,.dashboard-page nav.dashboard-menu ul li.active a {
 color:#fff;
 background-color:#000000;
+}
+
+@media (max-width: 700px){
+  .main-menu{
+    top:8rem;
+    bottom:13rem;
+  }
+  .texte{
+    margin:0px 20px
+  }
 }

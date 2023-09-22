@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes favoris{% endblock %}
+
+{% block css %}
+{{ parent() }}
+<link rel="stylesheet" href="{{asset('CSS/favoris.css')}}">
+{% endblock %}
+
+{% block body %}
+
+<div class='main'>
+    <h1>Mes Favoris</h1>
+    <div class='wrap'>
+    {% for musique in favoris %}
+              <figure>
+                <a href="{{path('app_oneMusique', {id:musique.id})}}">
+                    <img src="{{asset('photo/musique/' ~ musique.photo)}}" alt="{{musique.nom}}" width='120' height="120">
+                    <figcaption> {{musique.nom}} - {{musique.titre}}</figcaption>              
+                </a>
+            </figure>
+    {% endfor %}
+    </div>
+</div>
+            
+         
+        
+           
+      
+           
+   
+
+
+
+
+
+
+
+{% endblock %}

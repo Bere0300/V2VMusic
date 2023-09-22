@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MusiqueRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MusiqueRepository::class)]
@@ -29,7 +31,16 @@ class Musique
     private ?Genre $genre = null;
 
     #[ORM\ManyToOne(inversedBy: 'musiques')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'favoris')]
+    private Collection $favoris;
+
+    public function __construct()
+    {
+        $this->favoris = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -107,4 +118,29 @@ class Musique
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getFavoris(): Collection
+    {
+        return $this->favoris;
+    }
+
+    public function addFavori(User $favori): static
+    {
+        if (!$this->favoris->contains($favori)) {
+            $this->favoris->add($favori);
+        }
+
+        return $this;
+    }
+
+    public function removeFavori(User $favori): static
+    {
+        $this->favoris->removeElement($favori);
+
+        return $this;
+    }
+
 }
