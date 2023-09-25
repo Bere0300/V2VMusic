@@ -37,7 +37,7 @@ class GenreController extends AbstractController
             
         ]);
     }
-    #[Route('/delete_genre_{id}', name: 'app_delete_genre')]
+    #[Route('/admin/delete_genre_{id}', name: 'app_delete_genre')]
     public function deleteGenre($id, GenreRepository $repo)
     {
         $genre= $repo->find($id);
@@ -46,7 +46,7 @@ class GenreController extends AbstractController
         return $this->redirectToRoute('app_genre');
     }
   
-    #[Route('/update_genre_{id}', name: 'app_update_genre')]
+    #[Route('/admin/update_genre_{id}', name: 'app_update_genre')]
     public function updateGenre($id,GenreRepository $repo, Request $request, SluggerInterface $slugger): Response
     {        
         $genre= $repo->find($id);

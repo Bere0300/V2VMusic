@@ -159,7 +159,7 @@ class MusiqueController extends AbstractController
         return $this->redirectToRoute('app_allMusique');
     }
     //-------------------------AJOUT et RETRAIT FAVORIS-----------------------------
-    #[Route('/ajoutFavoris_{id}', name: 'app_favoris')]
+    #[Route('/profile/ajoutFavoris_{id}', name: 'app_favoris')]
     public function ajoutFavoris($id,Musique $musique, MusiqueRepository $repo)
     {
         $musiques = $repo->find($id);
@@ -171,7 +171,7 @@ class MusiqueController extends AbstractController
         $this->addFlash('success', 'Musique ajoutée à vos favoris');
         return $this->redirectToRoute('app_oneMusique', array('id'=>$id));
     }
-    #[Route('/retraitFavoris_{id}', name: 'app_retrait_favoris')]
+    #[Route('/profile/retraitFavoris_{id}', name: 'app_retrait_favoris')]
     public function retraitFavoris($id,Musique $musique, MusiqueRepository $repo)
     {
         $musiques = $repo->find($id);   
@@ -185,7 +185,7 @@ class MusiqueController extends AbstractController
     }
 
     //----------------------------AFFICHAGE FAVORIS-------------------------------------
-    #[Route('/favoris_{id}', name: 'app_affichage_favoris')]
+    #[Route('/profile/favoris_{id}', name: 'app_affichage_favoris')]
     public function afficherFavoris($id, UserRepository $repo)
     {
         $user= $repo->find($id);

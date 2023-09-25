@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class ProfilController extends AbstractController
 {
-    #[Route('/profil_{id}', name: 'app_profil')]
+    #[Route('/profile/profil_{id}', name: 'app_profil')]
     public function index($id,MusiqueRepository $repo, UserRepository $userRepo): Response
     {
         $musiques = $repo->findAll();
@@ -48,7 +48,7 @@ class ProfilController extends AbstractController
     }
 
     //------------------------------------------EDIT PROFILE------------------------
-    #[Route('/editProfile/{id}', name: 'app_edit_profil')]
+    #[Route('profile/editProfile/{id}', name: 'app_edit_profil')]
     public function updateProfil($id, UserRepository $repo, Request $request, SluggerInterface $slugger)
     {
         $profil= $repo->find($id);
@@ -84,7 +84,7 @@ class ProfilController extends AbstractController
             ]);
     }
 
-    #[Route('/favoris_{id}', name: 'app_affichage_favoris')]
+    #[Route('/profile/favoris_{id}', name: 'app_affichage_favoris')]
     public function afficherFavoris($id, UserRepository $repo)
     {
         $user= $repo->find($id);
