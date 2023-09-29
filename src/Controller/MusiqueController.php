@@ -2,12 +2,15 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
+use DateTime;
 use App\Entity\Musique;
 use App\Form\MusiqueType;
+use App\Entity\Commentaire;
+use App\Form\CommentaireType;
 use App\Repository\UserRepository;
 use App\Repository\GenreRepository;
 use App\Repository\MusiqueRepository;
+use App\Repository\CommentaireRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -134,9 +137,12 @@ class MusiqueController extends AbstractController
     public function OneMusique($id, MusiqueRepository $repo)
     {
         $musique = $repo->find($id);
+        $favoris = $musique->getFavoris();
 
         return $this->render('musique/oneMusique.html.twig', [
-            'musique'=>$musique
+            'musique'=>$musique,
+            'favoris'=>$favoris
+
         ]);
     }
     //--------------------------GESTION ADMIN---------------------------------------
@@ -159,30 +165,32 @@ class MusiqueController extends AbstractController
         return $this->redirectToRoute('app_allMusique');
     }
     //-------------------------AJOUT et RETRAIT FAVORIS-----------------------------
+
     #[Route('/profile/ajoutFavoris_{id}', name: 'app_favoris')]
-    public function ajoutFavoris($id,Musique $musique, MusiqueRepository $repo)
+    public function ajoutFavoris(Musique $musique, MusiqueRepository $repo)
     {
-        $musiques = $repo->find($id);
         if(!$musique){
             throw new NotFoundHttpException('Pas de musique trouvée');
         }
         $musique->addFavori($this->getUser());
         $repo->save($musique,1);
         $this->addFlash('success', 'Musique ajoutée à vos favoris');
-        return $this->redirectToRoute('app_oneMusique', array('id'=>$id));
+        return $this->redirectToRoute('app_oneMusique', array('id'=>$musique->getId()));
     }
+    
     #[Route('/profile/retraitFavoris_{id}', name: 'app_retrait_favoris')]
-    public function retraitFavoris($id,Musique $musique, MusiqueRepository $repo)
-    {
-        $musiques = $repo->find($id);   
+    public function retraitFavoris(Musique $musique, MusiqueRepository $repo)
+    {   
         if(!$musique){
             throw new NotFoundHttpException('Pas de musique trouvée');
         }
         $musique->removeFavori($this->getUser());
         $repo->save($musique,1);
         $this->addFlash('error', 'Musique retirée de vos favoris');
-        return $this->redirectToRoute('app_oneMusique', array('id'=>$id));
+        return $this->redirectToRoute('app_oneMusique', array('id'=>$musique->getId()));
     }
+
+
 
     //----------------------------AFFICHAGE FAVORIS-------------------------------------
     #[Route('/profile/favoris_{id}', name: 'app_affichage_favoris')]
@@ -197,4 +205,9 @@ class MusiqueController extends AbstractController
 
         ]);
     }
+    
+
+
+    
+
 }

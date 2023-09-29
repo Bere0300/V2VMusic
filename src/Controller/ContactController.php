@@ -24,13 +24,13 @@ class ContactController extends AbstractController
             $data= $form->getData();
             $adresse = $data['email'];
             $content= $data['content'];
-            $nom = $data['nom'];
-            $prenom = $data['prenom'];
+            $sujet=$data['sujet'];
+            
             
             $email = (new Email())
             ->from($adresse)
-            ->to('admin@v2vMusic.com')
-            ->subject('Demande de contact de' ." ". $prenom ." ". $nom)
+            ->to('admin@v2vmusic.fr')
+            ->subject($sujet)
             ->text($content);
 
             $mailer->send($email);

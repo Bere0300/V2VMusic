@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Form\EditProfileType;
+use App\Repository\CommentaireRepository;
 use App\Repository\UserRepository;
 use App\Repository\MusiqueRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -83,7 +84,7 @@ class ProfilController extends AbstractController
                 'formProfil'=>$form->createView()
             ]);
     }
-
+    //----------------AFFICHZGE FAVORIS---------------------------------------
     #[Route('/profile/favoris_{id}', name: 'app_affichage_favoris')]
     public function afficherFavoris($id, UserRepository $repo)
     {
@@ -96,4 +97,6 @@ class ProfilController extends AbstractController
 
         ]);
     }
+   
+
 }

@@ -23,12 +23,12 @@
             <div id="carousel">
                 <div id="content">
                     {% for musique in user.musiques %}
-                        <figure>
-                            <a href="{{asset('fichier/musique/' ~ musique.fichier)}}">
-                                <img src="{{asset('photo/musique/' ~ musique.photo)}}" alt="{{musique.nom}}" onclick="lancer_son();">
+                        <a href="{{path('app_oneMusique', {id: musique.id})}}">
+                            <figure>
+                                <img src="{{asset('photo/musique/' ~ musique.photo)}}" alt="{{musique.nom}}" width='120' height="120">
                                 <figcaption> {{musique.nom}} - {{musique.titre}}</figcaption>              
-                            </a>
-                        </figure>
+                            </figure>
+                        </a>
                     {% endfor %}
                 </div>
             </div>

@@ -3,11 +3,11 @@
     {% block title %} Commentaires{% endblock %}
     {% block css %}
         {{parent()}} 
-        <link rel="stylesheet" href="{{asset('CSS/commentaire.css')}}">
+        <link rel="stylesheet" href="{{asset('CSS/form.css')}}">
     {% endblock %}
    {% block body %}
-        <div id="main">
-            <form> 
+        <div class="main">
+            {# <form> 
                 <h1>Commentaire</h1>
                 <div class="Formulaire">
                     <label for="prenom" >Pseudo : </label>
@@ -47,7 +47,14 @@
                     <textarea type="text" id="commentaire" placeholder="Votre commentaire..."></textarea>
                 </div>
                 <button>Valider</button>
-            </form>
+            </form> #}
+        {{ form_start(formCommentaire) }}
+            <h1>Commentaire</h1>
+                {{ form_row(formCommentaire.note) }}
+                {{ form_row(formCommentaire.content) }}
+                <button type="submit" class="button">Valider</button>
+        {{ form_end(formCommentaire) }}
+
         </div>
     {% endblock %}
     

@@ -3,7 +3,62 @@
     margin: 0px;
     padding: 0px;
 }
-img{
+.main{
+  flex-direction: column;
+  display: flex;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+.wrap{
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 50px;
+  justify-content: center;
+  margin: 50px 300px 
+}
+.com
+{
+  background-color: rgba(255, 255, 255, 0.748);
+  border: 1px solid black;
+  width: 300px ;
+  height: 100px;
+  margin: 20px;
+  padding: 10px;
+
+}
+.titre{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 20px;
+  font-style: italic;
+}
+.text{
+  text-align: center;
+}
+.com h5{
+font-size: 15px;
+margin-bottom: 5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* img{
     display: block;
     margin: auto;
 }
@@ -166,4 +221,4 @@ form button{
       fill: var(--fill);
     }
   }
-  
+   */

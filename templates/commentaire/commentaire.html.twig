@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+
+{% block css %}
+{{ parent() }}
+<link rel="stylesheet" href="{{asset('CSS/commentaire.css')}}">
+{% endblock %}
+
+{% block body %}
+
+    <div class='main'>
+        <div class='text'>
+            <h1>Mes commentaires</h1>
+        </div>
+        <div class='wrap'>
+            {% for commentaire in app.user.commentaires | reverse %}
+                <div class="com">
+                    <div class='titre'>
+                        <h6>{{ commentaire.dateDeCreation | date("d-m-Y") }}</h6>  
+                        <h6>{{ commentaire.note }} /5</h6>
+                    </div>
+                    <h5>{{ commentaire.user.pseudo}}</h5>
+                    <p>'{{ commentaire.content }}'</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>           
+            
+{% endblock %}

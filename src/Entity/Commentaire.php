@@ -15,27 +15,31 @@ class Commentaire
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $date_de_publication = null;
+    private ?\DateTimeInterface $dateDeCreation = null;
+
 
     #[ORM\Column]
     private ?int $note = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $contenu = null;
+    private ?string $content = null;
+
+    #[ORM\ManyToOne(inversedBy: 'commentaires')]
+    private ?User $user = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getDateDePublication(): ?\DateTimeInterface
+    public function getDateDeCreation(): ?\DateTimeInterface
     {
-        return $this->date_de_publication;
+        return $this->dateDeCreation;
     }
 
-    public function setDateDePublication(\DateTimeInterface $date_de_publication): static
+    public function setDateDeCreation(\DateTimeInterface $dateDeCreation): static
     {
-        $this->date_de_publication = $date_de_publication;
+        $this->dateDeCreation = $dateDeCreation;
 
         return $this;
     }
@@ -52,14 +56,26 @@ class Commentaire
         return $this;
     }
 
-    public function getContenu(): ?string
+    public function getContent(): ?string
     {
-        return $this->contenu;
+        return $this->content;
     }
 
-    public function setContenu(string $contenu): static
+    public function setContent(string $content): static
     {
-        $this->contenu = $contenu;
+        $this->content = $content;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -7,23 +7,18 @@
 
 {% endblock %}
 
+{% block title %} {{musique.nom}} - {{musique.titre}}{% endblock %}
 {% block body %}
 
 <div class="main">
-
     <div class='box'>
-
         <div class='circle'></div>
-
         <div class="musique">
             <img src="{{asset('photo/musique/' ~ musique.photo)}}" alt="{{musique.nom}}">
-
             <h5>{{musique.titre}} - {{musique.nom}}</h5>
-
             <audio controls controlsList ='nodownload'autoplay src="{{asset('fichier/musique/' ~ musique.fichier)}}"></audio>
-             <div class="button">
+            <div class="button">
                 {% if is_granted('ROLE_USER') %}
-                    {% for favoris in musique.favoris %}
                         {% if favoris.id == app.user.id %}
                             <a href="{{path('app_retrait_favoris', {id:musique.id})}}"><i class="fa fa-heart" style='font-size: 40px; color:red'></i></a>
                         {% else %}
@@ -31,18 +26,12 @@
                         {% endif %}
                     {% else %}
                         <a href="{{path('app_favoris', {id: musique.id})}}"><i class="fa fa-heart" style='font-size: 40px; color:white'></i></a>
-                    {% endfor %}
                 {% endif %}
-                    
-                    
                 {% if app.user %}
-                    
-                        <a href="{{path('app_commentaire')}}"><i class='fa fa-comment-o' style='font-size: 40px; color:white'></i></a>
-                
-                {% endif %}
-           </div>
+                    <a href="{{path('app_formCommentaire', {id:musique.user.id})}}"><i class='fa fa-comment-o' style='font-size: 40px; color:white'></i></a>
+                {% endif %}  
+            </div>
         </div>
     </div>
-
 </div>
 {% endblock %}
