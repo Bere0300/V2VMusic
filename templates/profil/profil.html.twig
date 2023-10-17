@@ -5,7 +5,6 @@
 {% block css %}
     {{parent()}}
     <link rel="stylesheet" href="{{asset('CSS/profilArtiste.css')}}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 
 {% block body %}
@@ -41,7 +40,7 @@
                     </a>
                 </li>
                 <li class="has-subnav">
-                    <a href="{{path('app_musique')}}">
+                    <a href="{{path('app_musique', {id: app.user.id})}}">
                        <i class="fa fa-cloud-download fa-2x"></i>
                         <span class="nav-text">
                             Importer
@@ -69,7 +68,7 @@
     </nav>
     <div class='haut'>
         <div id="pseudo">
-                <img id="profil"src="{{asset('photo/profil/' ~ app.user.photo)}}" alt="{{app.user.photo}}" width= "200" heigth="200">
+            <img class="profil"src="{{asset('photo/profil/' ~ app.user.photo)}}" alt="{{app.user.photo}}" width= "200" heigth="200">
         </div>
         <div class='texte'> 
             <h2>{{app.user.pseudo}}</h2>
@@ -114,15 +113,6 @@
                 </svg>
             </button>
         </div>
-    
-   
-        <div class='note'>
-            <div class="texte">
-            <h2>Commentaires récents</h2>
-            </div>
-           
-            
-        </div>
         
     </div>        
 
@@ -141,7 +131,7 @@
                   
                 </li>
                 <li class="has-subnav">
-                    <a href="#">
+                    <a href="{{path('app_commentaire_user', {id: app.user.id})}}">
                         <i class="fa fa-comments fa-2x"></i>
                         <span class="nav-text">
                            Mes commentaires postés
@@ -160,11 +150,11 @@
         </nav>
         <div class='haut'>
             <div id="pseudo">
-                <img id="profil"src="{{asset('photo/profil/' ~ app.user.photo)}}" alt="{{app.user.photo}}">
+                <img class="profil"src="{{asset('photo/profil/' ~ app.user.photo)}}" alt="{{app.user.photo}}" width= "200" heigth="200">
             </div>
             <div class='texte'> 
                 <h2>{{app.user.pseudo}}</h2>
-                <p> {{app.user.biographie}}  </p>   
+                <p> {{app.user.biographie}} </p>   
             </div>    
         </div>
         <h2> Mes Favoris</h2>
@@ -209,8 +199,6 @@
         <div class='note'>
             <div class="texte">
             <h2>Commentaires postés récemment</h2>
-            </div>
-        </div>
     
         
     </div>      

@@ -9,10 +9,10 @@
 {% block body %}
 
 <div class='main'>
-
-        <a href="{{path('app_artiste_genre', {id: genre.id})}}"><h2>Nos Artistes 
-            {{genre.nom |upper}}
-        </h2></a>
+            <div class='texte'>
+                <h2>Nos Artistes {{genre.nom |upper}}</h2>  
+                <a href="{{path('app_artiste_genre', {id: genre.id})}}">Voir plus</a>
+            </div>
     
    
     <div class="rap">
@@ -38,10 +38,10 @@
         </figure>
     </div>
 
-       <a href="{{path('app_musique_genre', {id: genre.id})}}"> <h2>Nos Musiques
-            {{genre.nom |upper}}
-        </h2></a>
-    
+        <div class='texte'>
+            <h2>Nos Musiques {{genre.nom |upper}}</h2>  
+            <a href="{{path('app_musique_genre', {id: genre.id})}}">Voir plus</a>
+        </div>
     <div class="rap">
         {% for musique in musiques %}
             <figure>

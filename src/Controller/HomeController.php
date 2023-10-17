@@ -34,11 +34,5 @@ class HomeController extends AbstractController
     {
         return $this->render('home/mentionLegales.html.twig');
     }
-
-    #[Route('/profile/commentaire', name: 'app_commentaire')]
-    public function commentaire()
-    {
-        return $this->render('commentaire/commentaire.html.twig');
-    }
 }
 

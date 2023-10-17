@@ -37,9 +37,17 @@ class Musique
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'favoris')]
     private Collection $favoris;
 
+
+    #[ORM\Column]
+    private ?bool $moderation = false ;
+
+    #[ORM\OneToMany(mappedBy: 'musique', targetEntity: Commentaire::class)]
+    private Collection $commentaires;
+
     public function __construct()
     {
         $this->favoris = new ArrayCollection();
+        $this->commentaires = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -139,6 +147,49 @@ class Musique
     public function removeFavori(User $favori): static
     {
         $this->favoris->removeElement($favori);
+
+        return $this;
+    }
+
+   
+    public function isModeration(): ?bool
+    {
+        return $this->moderation;
+    }
+
+    public function setModeration(bool $moderation): static
+    {
+        $this->moderation = $moderation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commentaire>
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaire $commentaire): static
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires->add($commentaire);
+            $commentaire->setMusique($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaire $commentaire): static
+    {
+        if ($this->commentaires->removeElement($commentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getMusique() === $this) {
+                $commentaire->setMusique(null);
+            }
+        }
 
         return $this;
     }

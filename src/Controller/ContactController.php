@@ -21,6 +21,7 @@ class ContactController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
+
             $data= $form->getData();
             $adresse = $data['email'];
             $content= $data['content'];

@@ -3,7 +3,7 @@
 {% block css %}
 {{ parent() }}
 <link rel="stylesheet" href="{{asset('CSS/oneMusique.css')}}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 
 {% endblock %}
 
@@ -12,26 +12,48 @@
 
 <div class="main">
     <div class='box'>
-        <div class='circle'></div>
+        <div class='circle'>  
+        </div>
+         <div class='centre'>  
+                <img src="{{asset('photo/musique/' ~ musique.photo)}}" alt="{{musique.nom}}">
+        </div>
         <div class="musique">
-            <img src="{{asset('photo/musique/' ~ musique.photo)}}" alt="{{musique.nom}}">
-            <h5>{{musique.titre}} - {{musique.nom}}</h5>
-            <audio controls controlsList ='nodownload'autoplay src="{{asset('fichier/musique/' ~ musique.fichier)}}"></audio>
+            <div class='top'>
+                <h5>{{musique.titre}} - {{musique.nom}}</h5>
+            </div>
+            <div class='audio'>
+                <audio controls controlsList ='nodownload'autoplay src="{{asset('fichier/musique/' ~ musique.fichier)}}"></audio>
+            </div>
             <div class="button">
                 {% if is_granted('ROLE_USER') %}
-                        {% if favoris.id == app.user.id %}
+                        {% if  musique.id and app.user.id %}
                             <a href="{{path('app_retrait_favoris', {id:musique.id})}}"><i class="fa fa-heart" style='font-size: 40px; color:red'></i></a>
                         {% else %}
                             <a href="{{path('app_favoris', {id:musique.id})}}"><i class="fa fa-heart" style='font-size: 40px; color:white'></i></a>
                         {% endif %}
-                    {% else %}
-                        <a href="{{path('app_favoris', {id: musique.id})}}"><i class="fa fa-heart" style='font-size: 40px; color:white'></i></a>
-                {% endif %}
-                {% if app.user %}
-                    <a href="{{path('app_formCommentaire', {id:musique.user.id})}}"><i class='fa fa-comment-o' style='font-size: 40px; color:white'></i></a>
+                            <a href="{{path('app_formCommentaire', {id:musique.id})}}"><i class='fa fa-comment-o' style='font-size: 40px; color:white'></i></a>
                 {% endif %}  
             </div>
         </div>
     </div>
+    <a href="{{path('app_signalement', {id:musique.id})}}" class='signal'><button class='signaler'>Signaler <i class="fa fa-exclamation-triangle"></i></button></a>
+     <div class='text'>
+            <h1>Commentaires</h1>
+        </div>
+        <div class='wrap'>
+            {% for commentaire in musique.commentaires | reverse %}
+                <div class="com">
+                    <div class='titre'>
+                        <h6>{{ commentaire.dateDeCreation | date("d-m-Y") }}</h6>  
+                        <h6>{{ commentaire.note }} <i class='fa fa-star'style='font-size: 20px; color:yellow'></i></h6>
+                    </div>
+                    <div class='info'>
+                        <h5>De : {{ commentaire.user.pseudo}}</h5>
+                        <h5>Pour : {{ commentaire.musique.titre}}</h5>
+                    </div>
+                    <p>'{{ commentaire.content }}'</p>
+                </div>
+            {% endfor %}
+        </div>
 </div>
 {% endblock %}

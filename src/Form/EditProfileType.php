@@ -24,7 +24,7 @@ class EditProfileType extends AbstractType
         $request=$this->requestStack->getCurrentRequest();
         $isRequired=false;
 
-        if($request->getPathInfo()=='/musique')
+        if($request->getPathInfo()=='/profil')
         {
             $isRequired= true;
         }

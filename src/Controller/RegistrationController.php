@@ -16,6 +16,9 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Routing\Generator\UrlGenerator;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Validator\Constraints\Url;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class RegistrationController extends AbstractController
@@ -37,19 +40,19 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) 
         {
             $file =$form->get('photo')->getData();
-            $fileName=$slugger->slug($user->getPseudo()). uniqid() . "." . $file->guessExtension();
-        
-            try{
-            /*on déplace l'image uploadé dans le dossier configuré dans les paramètres (voir service.yaml)
-            avec le nom $filename*/
-            $file->move($this->getParameter('photos_profil'), $fileName);
-            }catch(FileException $e){
-                //gestion des erreurs d'upload
-        
-            }
-            //on affecte le nom de l'image '$filename' à la propriété photo du produit pour l'envoie en bdd
-            $user->setPhoto($fileName);
 
+            $fileName=$slugger->slug($user->getPseudo()). uniqid() . "." . $file->guessExtension();
+            
+                try{
+                /*on déplace l'image uploadé dans le dossier configuré dans les paramètres (voir service.yaml)
+                avec le nom $filename*/
+                $file->move($this->getParameter('photos_profil'), $fileName);
+                }catch(FileException $e){
+                    //gestion des erreurs d'upload
+            
+                }
+                //on affecte le nom de l'image '$filename' à la propriété photo du produit pour l'envoie en bdd
+            $user->setPhoto($fileName);
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,

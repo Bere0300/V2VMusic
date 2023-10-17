@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="{{asset('CSS/style.css')}}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+
     {% endblock %}
     <title>{% block title %}{% endblock %}</title>
 </head>
@@ -73,6 +74,18 @@
                                             <a href="{{path('app_allUsers')}}">Gestion des utilisateurs</a>
                                         </li>
                                         <div class="arrow"></div>
+                                    </ul>
+                                </div>
+                            </li> 
+                        {% endif %}
+                         {% if app.user and is_granted('ROLE_MODO') %}
+                            <li class="nav-link" style="--i: .85s">
+                                <a href="#">Modo<i class="fa fa-caret-down"></i></a>
+                                <div class="dropdown">
+                                    <ul>
+                                        <li class="dropdown-link">
+                                            <a href="{{path('app_moderation')}}">Modération des musiques</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </li> 

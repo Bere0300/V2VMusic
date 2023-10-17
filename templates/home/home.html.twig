@@ -25,12 +25,14 @@
         <h2> Dernières sorties </h2>
         <div class='wrap'>
             {% for musique in musiques %}
-            <a href="{{path('app_oneMusique', {id: musique.id})}}">
-                <figure>
-                    <img src="{{asset('photo/musique/' ~ musique.photo)}}" alt="{{musique.nom}}" width='120' height="120">
-                    <figcaption> {{musique.nom}} - {{musique.titre}}</figcaption>              
-                </figure>
-            </a>
+                {% if musique.moderation == true %}
+                    <a href="{{path('app_oneMusique', {id: musique.id})}}">
+                        <figure>
+                            <img src="{{asset('photo/musique/' ~ musique.photo)}}" alt="{{musique.nom}}" width='120' height="120">
+                            <figcaption> {{musique.nom}} - {{musique.titre}}</figcaption>              
+                        </figure>
+                    </a>
+                {% endif %}
             {% endfor %}
         </div>    
     </div>

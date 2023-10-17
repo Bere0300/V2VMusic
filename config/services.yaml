@@ -7,6 +7,7 @@ parameters:
     photos_profil: "%kernel.project_dir%/public/photo/profil"
     photos_musique: "%kernel.project_dir%/public/photo/musique"
     fichiers_musique: "%kernel.project_dir%/public/fichier/musique"
+    google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
 
 services:
     # default configuration for services in *this* file

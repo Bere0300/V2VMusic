@@ -20,8 +20,9 @@
         <th scope="col">Pseudo</th>
         <th scope="col">email</th>
         <th scope="col">Roles</th>
-        <th scope="col">Roles</th>
         <th scope="col">Supprimer</th>
+        <th scope="col">Passer en admin</th>
+        <th scope="col">Passer en modo</th>
       </tr>
       {% for user in users %}
       <tr >
@@ -29,11 +30,16 @@
         <td>{{user.nom}}</td>
         <td>{{user.pseudo}}</td>
         <td> {{user.email}}</td>
+        <td>
         {% for unrole in user.roles %}
-         <td>{{unrole}}</td>
+          {% if unrole == 'ROLE_ADMIN' or unrole == 'ROLE_MODO' %}
+              {{unrole}}
+          {% endif %}
         {% endfor %}
-        <td></td>
+        </td>
         <td><a href="{{path('app_deleteAdmin_user', {id: user.id})}}" onClick="return confirm('êtes-vous sur de vouloir supprimer?')"><i class="fa fa-trash" style="font-size:36px; color:black" ></i></a></td>
+        <td><a href="{{path('app_admin', {id: user.id})}}" ><i class="fa fa-check" style="font-size:36px; color:black" ></i></a></td>
+        <td><a href="{{path('app_modo', {id: user.id})}}" ><i class="fa fa-check" style="font-size:36px; color:black" ></i></a></td>
       </tr>
       {% endfor %}
   </table>

@@ -49,8 +49,8 @@ class ProfilController extends AbstractController
     }
 
     //------------------------------------------EDIT PROFILE------------------------
-    #[Route('profile/editProfile/{id}', name: 'app_edit_profil')]
-    public function updateProfil($id, UserRepository $repo, Request $request, SluggerInterface $slugger)
+    #[Route('profile/editProfile', name: 'app_edit_profil')]
+    public function updateProfil($id,UserRepository $repo, Request $request, SluggerInterface $slugger)
     {
         $profil= $repo->find($id);
         $form=$this->createForm(EditProfileType::class, $profil);

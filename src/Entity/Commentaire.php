@@ -27,6 +27,9 @@ class Commentaire
     #[ORM\ManyToOne(inversedBy: 'commentaires')]
     private ?User $user = null;
 
+    #[ORM\ManyToOne(inversedBy: 'commentaires')]
+    private ?Musique $musique = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -79,4 +82,18 @@ class Commentaire
 
         return $this;
     }
+
+    public function getMusique(): ?Musique
+    {
+        return $this->musique;
+    }
+
+    public function setMusique(?Musique $musique): static
+    {
+        $this->musique = $musique;
+
+        return $this;
+    }
+
+    
 }
