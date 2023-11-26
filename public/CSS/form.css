@@ -38,7 +38,7 @@ h1{
     background-color: rgb(242, 242, 242) ;
     text-align: center;
     color: black;
-    padding-bottom: 50px;
+    padding-bottom: 20px;
     font-style: italic;
 }
 .main div
@@ -56,7 +56,7 @@ label {
 }
 input{
     border-radius: 5px;
-    padding-left: 5px;
+    padding: 3px 5px;
 }
 .a{
     text-decoration: none;
@@ -73,7 +73,7 @@ a{
     margin-bottom: 10px;
     margin-left:10px; 
 } 
-#registration_form_genre, #registration_form_date_de_naissance{
+#registration_form_date_de_naissance{
    display: flow;
 }
 
@@ -81,9 +81,23 @@ a{
     font-size: 15px;
     font-weight: 400;
 }
+.main div #registration_form_genres{
+    display:block;
+    padding: 6px;
+}
+.main div #registration_form_genres label{
+    margin-right: 50px;
+}
+.main div #registration_form_genres input{
+    margin: 10px 5px 10px 5px;
+}
+
 
 @media (max-width: 1200px){
     form{
         width: auto;
+    }
+    .main div #registration_form_genres label{
+        margin-right: 34px;
     }
 }

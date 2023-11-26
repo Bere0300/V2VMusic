@@ -1,213 +1,203 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Mon Profil{% endblock %}
+{% block title %}Mon Profil {% endblock %}
 
 {% block css %}
-    {{parent()}}
-    <link rel="stylesheet" href="{{asset('CSS/profilArtiste.css')}}">
+	{{parent()}}
+	<link rel="stylesheet" href="{{asset('CSS/profil.css')}}">
 {% endblock %}
 
 {% block body %}
-    {% if app.user.profil == true %}
-    
-    <div class="main">
-    <nav class="main-menu">
-            <ul>
-                <li>
-                    <a href="{{path('app_edit_profil', {id:app.user.id})}}">
-                        <i class="fa fa-edit fa-2x"></i>
-                        <span class="nav-text">
-                           Modifier profil
-                        </span>
-                    </a>
-                  
-                </li>
-                <li class="has-subnav">
-                    <a href="{{path('app_commentaire_user', {id: app.user.id})}}">
-                        <i class="fa fa-comments fa-2x"></i>
-                        <span class="nav-text">
-                           Mes commentaires
-                        </span>
-                    </a>
-                    
-                </li>
-                      <li>
-                    <a href="{{path('app_all_musique', {id: app.user.id})}}">
-                        <i class="fa fa fa-music fa-2x"></i>
-                        <span class="nav-text">
-                          Gestion des musiques
-                        </span>
-                    </a>
-                </li>
-                <li class="has-subnav">
-                    <a href="{{path('app_musique', {id: app.user.id})}}">
-                       <i class="fa fa-cloud-download fa-2x"></i>
-                        <span class="nav-text">
-                            Importer
-                        </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{path('app_affichage_favoris', {id:app.user.id})}}">
-                        <i class="fa fa fa-music fa-2x"></i>
-                        <span class="nav-text">
-                          Mes favoris
-                        </span>
-                    </a>
-                
-                </li>
-                <li>
-                    <a href="{{path('app_user_delete', {id: app.user.id})}}">
-                        <i class="fa fa-trash fa-2x"></i>
-                        <span class="nav-text">
-                          Supprimer profil
-                        </span>
-                    </a>
-                </li>
-            </ul>
-    </nav>
-    <div class='haut'>
-        <div id="pseudo">
-            <img class="profil"src="{{asset('photo/profil/' ~ app.user.photo)}}" alt="{{app.user.photo}}" width= "200" heigth="200">
-        </div>
-        <div class='texte'> 
-            <h2>{{app.user.pseudo}}</h2>
-            <p> {{app.user.biographie}}</p>   
-        </div>    
-    </div>
-        <h2> Mes Musiques</h2>
-        <br/>
-        <div id="wrapper">
-            <div id="carousel">
-                <div id="content">
-                    {% for musique in app.user.musiques %}
-                        <figure>
-                            <a href="{{path('app_oneMusique', {id:musique.id})}}">
-                                <img src="{{asset('photo/musique/' ~ musique.photo)}}" alt="{{musique.nom}}" onclick="lancer_son();">
-                                <figcaption> {{musique.nom}} - {{musique.titre}}</figcaption>              
-                            </a>
-                        </figure>
-                    {% endfor %}
-                </div>
-            </div>
-            <button id="prev">
-                <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                >
-                <path fill="none" d="M0 0h24v24H0V0z" />
-                <path d="M15.61 7.41L14.2 6l-6 6 6 6 1.41-1.41L11.03 12l4.58-4.59z" />
-                </svg>
-            </button>
-            <button id="next">
-                <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                >
-                <path fill="none" d="M0 0h24v24H0V0z" />
-                <path d="M10.02 6L8.61 7.41 13.19 12l-4.58 4.59L10.02 18l6-6-6-6z" />
-                </svg>
-            </button>
-        </div>
-        
-    </div>        
+	{% if app.user.profil == true %}
 
-    {% else %}
+		<div class="main">
+			<nav class="main-menu">
+				<ul>
+					<li>
+						<a href="{{path('app_edit_profil', {id:app.user.id})}}">
+							<i class="fa fa-edit fa-2x"></i>
+							<span class="nav-text">
+								Modifier profil
+							</span>
+						</a>
 
-    <div class="main">
-    <nav class="main-menu">
-            <ul>
-                <li>
-                    <a href="{{path('app_edit_profil', {id:app.user.id})}}">
-                        <i class="fa fa-edit fa-2x"></i>
-                        <span class="nav-text">
-                           Modifier profil
-                        </span>
-                    </a>
-                  
-                </li>
-                <li class="has-subnav">
-                    <a href="{{path('app_commentaire_user', {id: app.user.id})}}">
-                        <i class="fa fa-comments fa-2x"></i>
-                        <span class="nav-text">
-                           Mes commentaires postés
-                        </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{path('app_user_delete', {id: app.user.id})}}">
-                        <i class="fa fa-trash fa-2x"></i>
-                        <span class="nav-text">
-                          Supprimer profil
-                        </span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <div class='haut'>
-            <div id="pseudo">
-                <img class="profil"src="{{asset('photo/profil/' ~ app.user.photo)}}" alt="{{app.user.photo}}" width= "200" heigth="200">
-            </div>
-            <div class='texte'> 
-                <h2>{{app.user.pseudo}}</h2>
-                <p> {{app.user.biographie}} </p>   
-            </div>    
-        </div>
-        <h2> Mes Favoris</h2>
-        <br/>
-        <div id="wrapper">
-            <div id="carousel">
-                <div id="content">
-                   {% for musique in favoris %}
-                        <figure>
-                            <a href="{{path('app_oneMusique', {id:musique.id})}}">
-                                <img src="{{asset('photo/musique/' ~ musique.photo)}}" alt="{{musique.nom}}" width='120' height="120">
-                                <figcaption> {{musique.nom}} - {{musique.titre}}</figcaption>              
-                            </a>
-                        </figure>
-                    {% endfor %}
-                </div>
-            </div>
-            <button id="prev">
-                <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                >
-                <path fill="none" d="M0 0h24v24H0V0z" />
-                <path d="M15.61 7.41L14.2 6l-6 6 6 6 1.41-1.41L11.03 12l4.58-4.59z" />
-                </svg>
-            </button>
-            <button id="next">
-                <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                >
-                <path fill="none" d="M0 0h24v24H0V0z" />
-                <path d="M10.02 6L8.61 7.41 13.19 12l-4.58 4.59L10.02 18l6-6-6-6z" />
-                </svg>
-            </button>
-        </div>
+					</li>
+					<li class="has-subnav">
+						<a href="{{path('app_commentaire_user', {id: app.user.id})}}">
+							<i class="fa fa-comments fa-2x"></i>
+							<span class="nav-text">
+								Mes commentaires
+							</span>
+						</a>
 
-        <div class='note'>
-            <div class="texte">
-            <h2>Commentaires postés récemment</h2>
-    
-        
-    </div>      
+					</li>
+					<li>
+						<a href="{{path('app_all_musique', {id: app.user.id})}}">
+							<i class="fa fa fa-music fa-2x"></i>
+							<span class="nav-text">
+								Gestion des musiques
+							</span>
+						</a>
+					</li>
+					<li class="has-subnav">
+						<a href="{{path('app_musique', {id: app.user.id})}}">
+							<i class="fa fa-cloud-download fa-2x"></i>
+							<span class="nav-text">
+								Importer
+							</span>
+						</a>
+					</li>
+					<li>
+						<a href="{{path('app_affichage_favoris', {id:app.user.id})}}">
+							<i class="fa fa fa-music fa-2x"></i>
+							<span class="nav-text">
+								Mes favoris
+							</span>
+						</a>
 
-    {% endif %}
+					</li>
+					<li>
+						<a href="{{path('app_user_delete', {id: app.user.id})}}">
+							<i class="fa fa-trash fa-2x"></i>
+							<span class="nav-text">
+								Supprimer profil
+							</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
+			<div class='haut'>
+				<div id="pseudo">
+					{% if app.user.photo == 'profil.png' %}
+						<img class='profil' src="{{asset('img/profil.png')}}" alt="photo" width="200" height="200">
+						{% else %}
+						<img class='profil' src="{{asset('photo/profil/' ~ app.user.photo)}}" alt="{{app.user.photo}}" width="200" height="200">
+					{% endif %}
+				</div>
+				<div class='texte'>
+					<h2>{{app.user.pseudo}}</h2>
+					<p>
+						{{app.user.biographie}}</p>
+				</div>
+			</div>
+			<h2>
+				Mes Musiques</h2>
+			<br/>
+			<div id="wrapper">
+				<div id="carousel">
+					<div id="content">
+						{% for musique in app.user.musiques %}
+							<figure>
+								<a href="{{path('app_oneMusique', {id:musique.id})}}">
+									<img src="{{asset('photo/musique/' ~ musique.photo)}}" alt="{{musique.nom}}" onclick="lancer_son();">
+									<figcaption>
+										{{musique.nom}}
+										-
+										{{musique.titre}}</figcaption>
+								</a>
+							</figure>
+						{% endfor %}
+					</div>
+				</div>
+				<button id="prev">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+						<path fill="none" d="M0 0h24v24H0V0z"/>
+						<path d="M15.61 7.41L14.2 6l-6 6 6 6 1.41-1.41L11.03 12l4.58-4.59z"/>
+					</svg>
+				</button>
+				<button id="next">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+						<path fill="none" d="M0 0h24v24H0V0z"/>
+						<path d="M10.02 6L8.61 7.41 13.19 12l-4.58 4.59L10.02 18l6-6-6-6z"/>
+					</svg>
+				</button>
+			</div>
+
+		</div>
+
+	{% else %}
+
+		<div class="main">
+			<nav class="main-menu">
+				<ul>
+					<li>
+						<a href="{{path('app_edit_profil', {id:app.user.id})}}">
+							<i class="fa fa-edit fa-2x"></i>
+							<span class="nav-text">
+								Modifier profil
+							</span>
+						</a>
+
+					</li>
+					<li class="has-subnav">
+						<a href="{{path('app_commentaire_user', {id: app.user.id})}}">
+							<i class="fa fa-comments fa-2x"></i>
+							<span class="nav-text">
+								Mes commentaires postés
+							</span>
+						</a>
+					</li>
+					<li>
+						<a href="{{path('app_user_delete', {id: app.user.id})}}" onclick="return confirm('êtes-vous sur de vouloir supprimer?')">
+							<i class="fa fa-trash fa-2x"></i>
+							<span class="nav-text">
+								Supprimer profil
+							</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
+			<div class='haut'>
+					{% if app.user.photo == 'profil.png' %}
+						<img class='profil' src="{{asset('img/profil.png')}}" alt="photo" width="200" height="200">
+						{% else %}
+						<img class='profil' src="{{asset('photo/profil/' ~ app.user.photo)}}" alt="{{app.user.photo}}" width="200" height="200">
+					{% endif %}
+				<div class='texte'>
+					<h2>{{app.user.pseudo}}</h2>
+					<p>
+						{{app.user.biographie}}
+					</p>
+				</div>
+			</div>
+			<h2>
+				Mes Favoris</h2>
+			<br/>
+			<div id="wrapper">
+				<div id="carousel">
+					<div id="content">
+						{% for musique in user.favoris %}
+							<figure>
+								<a href="{{path('app_oneMusique', {id:musique.id})}}">
+									<img src="{{asset('photo/musique/' ~ musique.photo)}}" alt="{{musique.nom}}" width='120' height="120">
+									<figcaption>
+										{{musique.nom}}
+										-
+										{{musique.titre}}</figcaption>
+								</a>
+							</figure>
+						{% endfor %}
+					</div>
+				</div>
+				<button id="prev">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+						<path fill="none" d="M0 0h24v24H0V0z"/>
+						<path d="M15.61 7.41L14.2 6l-6 6 6 6 1.41-1.41L11.03 12l4.58-4.59z"/>
+					</svg>
+				</button>
+				<button id="next">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+						<path fill="none" d="M0 0h24v24H0V0z"/>
+						<path d="M10.02 6L8.61 7.41 13.19 12l-4.58 4.59L10.02 18l6-6-6-6z"/>
+					</svg>
+				</button>
+			</div>
+		</div>
+
+	{% endif %}
 
 {% endblock %}
 
-{% block js %} <script src="{{asset('js/carousel.js')}}"> </script>{% endblock %}
-
-
-
+{% block js %}
+	<script src="{{asset('js/carousel.js')}}"></script>
+{% endblock %}

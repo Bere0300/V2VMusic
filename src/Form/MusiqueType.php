@@ -38,10 +38,10 @@ class MusiqueType extends AbstractType
                 'label'=>'Photo de couverture',
                 'constraints'=> [
                     new File([
-                        'maxSize'=>'1024k',
-                        'mimeTypes'=>[
-                            'image/jpeg',
-                            'image/png',
+                        'maxSize'=>'2M',
+                        'extensions'=>[
+                            'jpeg',
+                            'png',
                         ]
                     ])
                 ],
@@ -52,9 +52,10 @@ class MusiqueType extends AbstractType
                 'label'=> 'Choisir la musique',
                 'constraints'=> [
                     new File([
-                        'maxSize'=>'20000k',
-                        'mimeTypes'=>[
-                            'audio/*'
+                        'maxSize'=>'50M',
+                        'extensions'=>[
+                            'mp3',
+                            'mp4'
                         ]
                     ])
                 ],

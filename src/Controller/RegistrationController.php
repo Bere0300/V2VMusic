@@ -3,22 +3,26 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Genre;
 use App\Form\ProfilType;
 use App\Security\EmailVerifier;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Url;
+use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Routing\Generator\UrlGenerator;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Validator\Constraints\Url;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class RegistrationController extends AbstractController
@@ -31,9 +35,9 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/inscription', name: 'app_inscription')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserRepository $repo, SluggerInterface $slugger): Response
+    public function register(Request $request,UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $em, SluggerInterface $slugger): Response
     {
-        $user = new User();
+        $user=new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
@@ -41,25 +45,41 @@ class RegistrationController extends AbstractController
         {
             $file =$form->get('photo')->getData();
 
-            $fileName=$slugger->slug($user->getPseudo()). uniqid() . "." . $file->guessExtension();
-            
-                try{
-                /*on déplace l'image uploadé dans le dossier configuré dans les paramètres (voir service.yaml)
-                avec le nom $filename*/
-                $file->move($this->getParameter('photos_profil'), $fileName);
-                }catch(FileException $e){
-                    //gestion des erreurs d'upload
-            
-                }
-                //on affecte le nom de l'image '$filename' à la propriété photo du produit pour l'envoie en bdd
-            $user->setPhoto($fileName);
+            if($file instanceof UploadedFile){
+                
+                $fileName=$slugger->slug($user->getPseudo()). uniqid() . "." . $file->guessExtension();
+                
+                    try{
+                    /*on déplace l'image uploadé dans le dossier configuré dans les paramètres (voir service.yaml)
+                    avec le nom $filename*/
+                    $file->move($this->getParameter('photos_profil'), $fileName);
+                    }catch(FileException $e){
+                        //gestion des erreurs d'upload
+                
+                    }
+                    // on affecte le nom de l'image '$filename' à la propriété photo du produit pour l'envoie en bdd
+                $user->setPhoto($fileName);
+            }
+            else{
+                $user->setPhoto('profil.png');
+            }
+
+
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )
             );
-            $repo->save($user,1);
+
+            $genresUser= $form->get('genres')->getData();
+            foreach($genresUser as $genre){
+                $user->addGenre($genre);
+            };
+          
+            $em->persist($user);
+            $em->flush();
+        
 
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
@@ -98,31 +118,24 @@ class RegistrationController extends AbstractController
 
         return $this->redirectToRoute('app_home');
     }
-    
-    #[Route('/user_delete_{id}', name: 'app_user_delete')]
-    public function delete($id, UserRepository $repoUser): Response
-    {
-        $user = $repoUser->find($id);
-        $repoUser ->remove($user , 1);
-        
-       return $this->redirectToRoute('app_home');
-    }
+
 //-------------------------------GESTION USERS EN ADMIN-------------------------------------
 
     #[Route('admin/allUsers', name: 'app_allUsers')]
-    public function AllUser(UserRepository $repo)
+    public function AllUser(UserRepository $repo, PaginatorInterface $paginator, Request $request)
     {
-        $users= $repo->findAll();
+        $users= $repo->findUsers($request->query->getInt('page', 1));
 
         return $this->render('user/UserAdmin.html.twig', [
-            'users'=>$users
+            'users'=>$users,
+          
         ]);
     }
 
     #[Route('admin/delete_user_{id}', name: 'app_deleteAdmin_user')]
-    public function deleteAdmin($id, UserRepository $repoUser): Response
+    public function deleteAdmin(UserRepository $repoUser, User $users): Response
     {
-        $user = $repoUser->find($id);
+        $user = $repoUser->find($users->getId());
         $repoUser ->remove($user , 1);
         
     return $this->redirectToRoute('app_allUsers');

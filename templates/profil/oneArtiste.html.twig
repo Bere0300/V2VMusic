@@ -2,62 +2,67 @@
 
 
 {% block css %}
-{{ parent() }}
-<link rel="stylesheet" href="{{asset('CSS/profilArtiste.css')}}">
+	{{ parent() }}
+	<link rel="stylesheet" href="{{asset('CSS/profil.css')}}">
 {% endblock %}
 
 {% block body %}
-<div class="main">
-  <div class='haut'>
-        <div id="pseudo">
-                <img id="profil"src="{{asset('photo/profil/' ~ user.photo)}}" alt="{{user.photo}}" width= "200" heigth="200">
-        </div>
-        <div class='texte'> 
-            <h2>{{user.pseudo}}</h2>
-            <p> {{user.biographie}} </p>   
-        </div>    
-    </div>
-        <h2> Mes Musiques</h2>
-        <br/>
-        <div id="wrapper">
-            <div id="carousel">
-                <div id="content">
-                    {% for musique in user.musiques %}
-                        <a href="{{path('app_oneMusique', {id: musique.id})}}">
-                            <figure>
-                                <img src="{{asset('photo/musique/' ~ musique.photo)}}" alt="{{musique.nom}}" width='120' height="120">
-                                <figcaption> {{musique.nom}} - {{musique.titre}}</figcaption>              
-                            </figure>
-                        </a>
-                    {% endfor %}
-                </div>
-            </div>
-            <button id="prev">
-                <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                >
-                <path fill="none" d="M0 0h24v24H0V0z" />
-                <path d="M15.61 7.41L14.2 6l-6 6 6 6 1.41-1.41L11.03 12l4.58-4.59z" />
-                </svg>
-            </button>
-            <button id="next">
-                <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                >
-                <path fill="none" d="M0 0h24v24H0V0z" />
-                <path d="M10.02 6L8.61 7.41 13.19 12l-4.58 4.59L10.02 18l6-6-6-6z" />
-                </svg>
-            </button>
-        </div>
-</div>
+	<div class="main">
+		<div class='haut'>
+			<div id="pseudo">
+				{% if user.photo == 'profil.png' %}
+					<img class='profil' src="{{asset('img/profil.png')}}" alt="photo" width="200" height="200">
+					{% else %}"
+					<img class='profil' src="{{asset('photo/profil/' ~ user.photo)}}" alt="{{user.photo}}" width="200" height="200">
+				{% endif %}
+			</div>
+			<div class='texte'>
+				<h2>{{user.pseudo}}</h2>
+				<p>
+					{{user.biographie}}
+				</p>
+			</div>
+		</div>
+		<h2>
+			Mes Musiques</h2>
+		<br/>
+		<div id="wrapper">
+			<div id="carousel">
+				<div id="content">
+					{% for musique in user.musiques %}
+					{% if musique.moderation == true %}
+						
+						<a href="{{path('app_oneMusique', {id: musique.id})}}">
+							<figure>
+								<img src="{{asset('photo/musique/' ~ musique.photo)}}" alt="{{musique.nom}}" width='120' height="120">
+								<figcaption>
+									{{musique.nom}}
+									-
+									{{musique.titre}}</figcaption>
+							</figure>
+						</a>
+					{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+			<button id="prev">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+					<path fill="none" d="M0 0h24v24H0V0z"/>
+					<path d="M15.61 7.41L14.2 6l-6 6 6 6 1.41-1.41L11.03 12l4.58-4.59z"/>
+				</svg>
+			</button>
+			<button id="next">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+					<path fill="none" d="M0 0h24v24H0V0z"/>
+					<path d="M10.02 6L8.61 7.41 13.19 12l-4.58 4.59L10.02 18l6-6-6-6z"/>
+				</svg>
+			</button>
+		</div>
+	</div>
 
 
 {% endblock %}
 
-{% block js %} <script src="{{asset('js/carousel.js')}}"> </script>{% endblock %}
+{% block js %}
+	<script src="{{asset('js/carousel.js')}}"></script>
+{% endblock %}

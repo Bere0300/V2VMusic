@@ -1,28 +1,35 @@
 {% extends 'base.html.twig' %}
 
 {% block css %}
-{{ parent() }}
-<link rel="stylesheet" href="{{asset('CSS/form.css')}}">
+	{{ parent() }}
+	<link rel="stylesheet" href="{{asset('CSS/form.css')}}">
 {% endblock %}
 
-{% block title %}Modification du profil{% endblock %}
+{% block title %}Modification du profil
+{% endblock %}
 
 {% block body %}
 
-    <div class='main'>
+	<div class='main'>
 
-            {{ form_start(formProfil) }}
-                <h1>Modifier le profil</h1>
-                    {{ form_row(formProfil.photo) }}
-                    {{ form_row(formProfil.nom) }}
-                    {{ form_row(formProfil.prenom) }}
-                    {{ form_row(formProfil.pseudo) }}
-                    {{ form_row(formProfil.biographie) }}
+		{{ form_start(formProfil) }}
+		<h1>Modifier le profil</h1>
+		<label for="photo">Photo Actuelle</label>
+		{% if app.user.photo == 'profil.png' %}
+			<img src="{{asset('img/profil.png')}}" alt="photo" width="100" height="100">
+			{% else %}
+			<img src="{{asset('photo/profil/' ~ app.user.photo)}}" alt="{{app.user.photo}}" width="100" height="100">
+		{% endif %}
 
-                <button type="submit" class="button">Valider</button>
-            {{ form_end(formProfil) }}
-    </div>
+		{{ form_row(formProfil.photo) }}
+		{{ form_row(formProfil.nom) }}
+		{{ form_row(formProfil.prenom) }}
+		{{ form_row(formProfil.pseudo) }}
+		{{ form_row(formProfil.biographie) }}
 
+		<button type="submit" class="button">Valider</button>
+		{{ form_end(formProfil) }}
+	</div>
 
 
 {% endblock %}

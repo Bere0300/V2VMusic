@@ -3,11 +3,14 @@
 namespace App\Repository;
 
 use App\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Genre;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 
 /**
  * @extends ServiceEntityRepository<User>
@@ -19,7 +22,7 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private PaginatorInterface $paginator)
     {
         parent::__construct($registry, User::class);
     }
@@ -67,20 +70,36 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getResult();
     }
  
-//    /**
-//     * @return User[] Returns an array of User objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('u.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   /**
+    * @param int $page
+    * @return PaginatorInterface
+    */
+   public function findUsers(int $page): PaginationInterface
+   {
+       $data= $this->createQueryBuilder('u')
+           ->orderBy('u.id', 'DESC')
+           ->getQuery()
+           ->getResult();
+
+        $users = $this->paginator->paginate($data,$page,5,);
+
+        return $users;
+   }
+
+    //   /**
+    // * @return User[] Returns an array of Musique objects
+    // */
+    // public function findUser(?Genre $genre): array
+    // {
+    //     return $this->createQueryBuilder('u')
+    //         ->andWhere('u.genres = :genreId')
+    //         ->setParameter('genreId', $genre->getId())
+    //         ->orderBy('u.id', 'DESC')
+    //         ->setMaxResults(5)
+    //         ->getQuery()
+    //         ->getResult()
+    //     ;
+    // }
 
 //    public function findOneBySomeField($value): ?User
 //    {

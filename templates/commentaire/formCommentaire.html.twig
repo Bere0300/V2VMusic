@@ -7,6 +7,30 @@
     {% endblock %}
    {% block body %}
         <div class="main">
+        {{ form_start(formCommentaire) }}
+            <h1>Commentaire</h1>
+                {{ form_row(formCommentaire.note) }}
+                {{ form_row(formCommentaire.content) }}
+                <button type="submit" class="button">Valider</button>
+        {{ form_end(formCommentaire) }}
+
+
+
+
+        </div>
+    {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
             {# <form> 
                 <h1>Commentaire</h1>
                 <div class="Formulaire">
@@ -48,13 +72,5 @@
                 </div>
                 <button>Valider</button>
             </form> #}
-        {{ form_start(formCommentaire) }}
-            <h1>Commentaire</h1>
-                {{ form_row(formCommentaire.note) }}
-                {{ form_row(formCommentaire.content) }}
-                <button type="submit" class="button">Valider</button>
-        {{ form_end(formCommentaire) }}
 
-        </div>
-    {% endblock %}
     

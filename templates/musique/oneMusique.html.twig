@@ -26,12 +26,14 @@
             </div>
             <div class="button">
                 {% if is_granted('ROLE_USER') %}
-                        {% if  musique.id and app.user.id %}
-                            <a href="{{path('app_retrait_favoris', {id:musique.id})}}"><i class="fa fa-heart" style='font-size: 40px; color:red'></i></a>
-                        {% else %}
-                            <a href="{{path('app_favoris', {id:musique.id})}}"><i class="fa fa-heart" style='font-size: 40px; color:white'></i></a>
-                        {% endif %}
-                            <a href="{{path('app_formCommentaire', {id:musique.id})}}"><i class='fa fa-comment-o' style='font-size: 40px; color:white'></i></a>
+
+                    {% if  musique.favoris.contains(app.user) %}
+                        <a href="{{path('app_retrait_favoris', {id:musique.id})}}"><i class="fa fa-heart" style='font-size: 40px; color:red'></i></a>  
+                    {% else %}
+                        <a href="{{path('app_favoris', {id:musique.id})}}"><i class="fa fa-heart" style='font-size: 40px; color:white'></i></a>
+                    {% endif %}
+                    <a href="{{path('app_formCommentaire', {id:musique.id})}}"><i class='fa fa-comment-o' style='font-size: 40px; color:white'></i></a>
+                    
                 {% endif %}  
             </div>
         </div>

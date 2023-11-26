@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block css %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{asset('CSS/musiquebygenre.css')}}">
+{% endblock %}
+
+{% block title %}Artistes {{genre.nom}}{% endblock %}
+
+{% block body %}
+
+	<div class="main">
+		<div class="haut">
+			<div class="choix">
+				<select class="trier">
+					<option selected>Trier Par</option>
+					<option value="2">Artiste Z-A</option>
+					<option value="2">Artistes Z-A</option>
+				</select>
+			</div>
+			<div class="titre">
+				<h2>
+					Artistes {{genre.nom}}
+				</h2>
+
+			</div>
+		</div>
+		<div class="wrap">
+			{% for user in genre.users %}
+				{% if user.profil == 1 %}
+					<a href="{{path('app_view_profil', {id: user.id})}}">
+						<figure>
+							{% if user.photo == 'profil.png' %}
+								<img class='profil' src="{{asset('img/profil.png')}}" alt="photo" width="120" height="120">
+								{% else %}"
+								<img class='profil' src="{{asset('photo/profil/' ~ user.photo)}}" alt="{{user.photo}}" width="120" height="120">
+							{% endif %}
+							<figcaption>{{user.pseudo}}</figcaption>
+						</figure>
+					</a>
+				{% endif %}
+			{% endfor %}
+
+		</div>
+	</div>
+
+
+{% endblock body %}

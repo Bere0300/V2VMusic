@@ -6,6 +6,8 @@ use App\Entity\Genre;
 use App\Entity\Musique;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
@@ -18,7 +20,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
  */
 class MusiqueRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry,private PaginatorInterface $paginator)
     {
         parent::__construct($registry, Musique::class);
     }
@@ -41,25 +43,39 @@ class MusiqueRepository extends ServiceEntityRepository
         }
     }
 
+   /**
+    * @return Musique[] Returns an array of Musique objects
+    */
+   public function findMusiqueByGenre(?Genre $genre): array
+   {
+       return $this->createQueryBuilder('m')
+           ->andWhere('m.genre = :genreId')
+           ->setParameter('genreId', $genre->getId())
+           ->orderBy('m.id', 'DEsc')
+           ->setMaxResults(5)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
+
+    /**
+    * @param int $page
+    * @return PaginatorInterface
+    */
+
+   public function findMusique(int $page): PaginationInterface
+   {
+      $data =  $this->createQueryBuilder('m')
+           ->orderBy('m.id', 'Desc')
+           ->getQuery()
+           ->getResult();
+
+        $musiques = $this->paginator->paginate($data, $page,5);
+       
+        return $musiques;
+   }
 
 
-
-
-
-//    /**
-//     * @return Musique[] Returns an array of Musique objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('m')
-//            ->andWhere('m.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('m.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
 
 //    public function findOneBySomeField($value): ?Musique
 //    {

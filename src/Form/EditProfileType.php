@@ -37,7 +37,9 @@ class EditProfileType extends AbstractType
                 'required'=>$isRequired,
             ])
             ->add('pseudo')
-            ->add('biographie', TextareaType::class )
+            ->add('biographie', TextareaType::class, [
+                'required'=>false,
+            ] )
         ;
     }
 

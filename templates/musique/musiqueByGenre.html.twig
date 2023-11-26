@@ -5,7 +5,7 @@
 	<link rel="stylesheet" href="{{asset('CSS/musiquebygenre.css')}}">
 {% endblock %}
 
-{% block title %}Musique{{genre.nom}}
+{% block title %}Musiques {{genre.nom}}
 {% endblock %}
 
 {% block body %}
@@ -15,14 +15,13 @@
 			<div class="choix">
 				<select class="trier">
 					<option selected>Trier Par</option>
-					<option value="1">Nouveautés</option>
-					<option value="2">Musique Z-A</option>
-					<option value="2">Musique Z-A</option>
+					<option value="2">Musique A-Z</option>
+					<option value="3">Musique Z-A</option>
 				</select>
 			</div>
 			<div class="titre">
 				<h2>
-					Musiques{{genre.nom}}
+					Musiques {{genre.nom}}
 				</h2>
 
 			</div>

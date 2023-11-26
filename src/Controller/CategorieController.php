@@ -39,9 +39,9 @@ class CategorieController extends AbstractController
         ]);
     }
     #[Route('/admin/delete_categorie_{id}', name: 'app_delete_categorie')]
-    public function deleteCategorie ($id, CategorieRepository $repo)
+    public function deleteCategorie (CategorieRepository $repo, Categorie $categories)
     {
-        $categorie = $repo->find($id);
+        $categorie = $repo->find($categories->getId());
         $repo->remove($categorie,1); 
 
         return $this->redirectToRoute('app_categorie');

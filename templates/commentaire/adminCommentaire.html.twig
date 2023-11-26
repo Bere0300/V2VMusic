@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les commentaires{% endblock %}
+
+{% block css %}
+{{ parent() }}
+<link rel="stylesheet" href="{{asset('CSS/admin.css')}}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+{% endblock %}
+
+{% block body %}
+<h1 >Listes des commentaires </h1>
+  <br>
+  <table >
+      <tr>
+        <th scope="col" >Date </th>
+        <th scope="col">Note </th>
+        <th scope="col">Contenu</th>
+        <th scope="col" >Utilisateur</th>
+        <th scope="col" >Musique</th>
+        <th scope="col" >Supprimer</th>
+      </tr>
+      {% for commentaire in commentaires %}
+      <tr >
+        <td>{{ commentaire.dateDeCreation | date("d-m-Y") }}</td>
+        <td>{{commentaire.note}}</td>
+        <td>{{commentaire.content}}</td>
+        <td>{{commentaire.user.pseudo}}</td>
+        <td>{{commentaire.musique.titre}}</td>
+        <td><a href="{{path('app_deleteAdmin_commentaire', {id: commentaire.id})}}" onClick="return confirm('êtes-vous sur de vouloir supprimer?')"><i class="fa fa-trash" style="font-size:36px; color:black" ></i></a></td>
+      </tr>
+      {% endfor %}
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>{{knp_pagination_render(commentaires)}}</td>
+  </table>
+
+{% endblock %}

@@ -53,9 +53,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $pseudo = null;
 
-    #[ORM\ManyToMany(targetEntity: Genre::class, mappedBy: 'user')]
-    private Collection $genres;
-
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Musique::class, orphanRemoval: true)]
     private Collection $musiques;
 
@@ -68,13 +65,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Commentaire::class)]
     private Collection $commentaires;
 
+    #[ORM\ManyToMany(targetEntity: Genre::class, inversedBy: 'users')]
+    private Collection $genres;
+
 
     public function __construct()
     {
-        $this->genres = new ArrayCollection();
         $this->musiques = new ArrayCollection();
         $this->favoris = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
+        $this->genres = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -231,32 +231,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Genre>
-     */
-    public function getGenres(): Collection
-    {
-        return $this->genres;
-    }
-
-    public function addGenre(Genre $genre): static
-    {
-        if (!$this->genres->contains($genre)) {
-            $this->genres->add($genre);
-            $genre->addUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeGenre(Genre $genre): static
-    {
-        if ($this->genres->removeElement($genre)) {
-            $genre->removeUser($this);
-        }
-
-        return $this;
-    }
+    
 
     /**
      * @return Collection<int, Musique>
@@ -357,6 +332,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function __toString()
+    {
+        return $this->nom;
+    }
+
+    /**
+     * @return Collection<int, Genre>
+     */
+    public function getGenres(): Collection
+    {
+        return $this->genres;
+    }
+
+    public function addGenre(Genre $genre): static
+    {
+        if (!$this->genres->contains($genre)) {
+            $this->genres->add($genre);
+        }
+
+        return $this;
+    }
+
+    public function removeGenre(Genre $genre): static
+    {
+        $this->genres->removeElement($genre);
+
+        return $this;
+    }
     
 
 

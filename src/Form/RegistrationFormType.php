@@ -29,21 +29,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class RegistrationFormType extends AbstractType
 {
-    public function __construct(RequestStack $requestStack) //construct : fonction qui d'excéute auto lors de l'instanciation
-    {
-        $this->requestStack = $requestStack;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-
-        $request = $this->requestStack->getCurrentRequest();
-        $isRequired = false;
-
-        if ($request->getPathInfo() == '/app_user_update') {
-            $isRequired = true;
-        }
-
         $builder
             ->add('nom', TextType::class, [
                 'label' => 'Nom *'
@@ -57,7 +44,7 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Date de Naissance *'
             ])
             ->add('photo', FileType::class, [
-                'label' => 'Photo de profil * ',
+                'label' => 'Photo de profil ',
                 'constraints' => [
                     new File([
                         'maxSize' => '1024k',
@@ -68,7 +55,7 @@ class RegistrationFormType extends AbstractType
                     ])
                 ],
                 'mapped' => false,
-                'required' => $isRequired
+                'required' => false
             ])
             ->add('pseudo', TextType::class, [
                 'label' => 'Pseudo *'
@@ -87,10 +74,11 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Choisissez votre profil *'
             ])
             ->add('agreeTerms', CheckboxType::class, [
+                'label'=> "J'accepte les conditions",
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'You should agree to our terms.',
+                        'message' => 'Vous devez acceptés les conditions.',
                     ]),
                 ],
             ])
@@ -120,6 +108,7 @@ class RegistrationFormType extends AbstractType
                 'attr' => ['autocomplete' => 'new-password'],
             ])
             ->add('genres', EntityType::class, [
+                'label'=>'Quel(s) est votre genre de musique?',
                 'class' => Genre::class,
                 'choice_label' => 'nom',
                 'multiple' => true,

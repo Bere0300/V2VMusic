@@ -14,10 +14,10 @@ option{
     justify-content: center;
 }
 .wrap{
-    display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin: 50px 300px 
+    margin-bottom: 50px;
+    display: flex;
 }
 figure {
     width: 120px;
@@ -54,4 +54,23 @@ h2{
 }
 a{
     text-decoration: none;
+}
+@media (max-width: 1200px)
+{
+    .wrap figure{
+        margin: 30px;
+    }
+    .choix{
+        margin-right: 0px;
+        margin-top: 20px;
+    }
+    .haut{
+        display: flex;
+        margin-top: 50px;
+        align-items: center;
+        flex-direction: column-reverse;
+    }
+    .titre{
+        margin-right: 0px;
+    }
 }

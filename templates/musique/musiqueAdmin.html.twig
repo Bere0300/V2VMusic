@@ -25,11 +25,14 @@
       <tr >
         <td><img src="{{asset('photo/musique/' ~ musique.photo)}}" alt="{{musique.photo}}" width="50"></td>
         <td>{{musique.titre}}</td>
-        <td> <audio controls src="{{asset('fichier/musique/' ~ musique.fichier)}}"></audio></td>
+        <td> <audio controls src="{{asset('fichier/musique/' ~ musique.fichier)}} "></audio></td>
         <td> {{musique.genre.nom}}</td>
         <td><a href="{{path('app_deleteAdmin_musique', {id: musique.id})}}" onClick="return confirm('êtes-vous sur de vouloir supprimer?')"><i class="fa fa-trash" style="font-size:36px; color:black" ></i></a></td>
       </tr>
       {% endfor %}
+      <td></td>
+      <td></td>
+      <td>{{knp_pagination_render(pagination)}}</td>
   </table>
 
 {% endblock %}

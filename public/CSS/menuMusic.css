@@ -44,4 +44,7 @@ a{
     .main{
         padding-top:10px ;
     }
+    .rap figure{
+        margin: 37px;
+    }
 }

@@ -18,17 +18,28 @@
 
             {{ form_start(registrationForm) }}
                 <h1>Inscription</h1>
+                <div class = 'info'>
                     {{ form_row(registrationForm.nom) }}
                     {{ form_row(registrationForm.prenom) }}
                     {{ form_row(registrationForm.date_de_naissance)}}
                     {{ form_row(registrationForm.email)}}
-                    {{ form_row(registrationForm.plainPassword, { label :"Mot de passe *"} ) }}
+                    {{ form_row(registrationForm.plainPassword.first ) }}
+                    <p>Votre mot de passe doit contenir : 
+                    <ul>
+                    <li>- 8 caratères minimum</li>
+                    <li>- 1 chiffre</li>
+                    <li>- 1 majsucule</li>
+                    <li>- 1 caratère spécial</li>
+                    </ul>
+                    </p>
+                     {{ form_row(registrationForm.plainPassword.second ) }}
                     {{ form_row(registrationForm.photo) }}
                     {{ form_row(registrationForm.pseudo) }}
                     {{ form_row(registrationForm.profil) }}
                     {{ form_row(registrationForm.genres) }}
                 <button type="submit" class="button">Valider</button>
                 <p style="color:red">* Obligatoire </p>
+
             {{ form_end(registrationForm) }}
 </div>
 {% endblock %}

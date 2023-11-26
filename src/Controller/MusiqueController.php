@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use DateTime;
 use App\Entity\User;
+use App\Entity\Genre;
 use App\Entity\Musique;
 use App\Form\SignalType;
 use App\Form\MusiqueType;
@@ -16,6 +17,7 @@ use App\Repository\GenreRepository;
 use App\Repository\MusiqueRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\CommentaireRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,13 +26,14 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class MusiqueController extends AbstractController
 {
 
 //---------------------------------------AJOUT D'UNE MUSIQUE--------------------------------------------------
-    #[Route('/musique_{id}', name: 'app_musique')]
-    public function new(MusiqueRepository $repo, Request $request, SluggerInterface $slugger , User $user): Response
+    #[Route('/profile/musique_{id}', name: 'app_musique')]
+    public function new(MusiqueRepository $repo, Request $request, SluggerInterface $slugger,MailerInterface $mailer, User $user ): Response
     {
         $musique=new Musique(); 
         $musique->setUser($this->getUser());
@@ -57,6 +60,14 @@ class MusiqueController extends AbstractController
             if($musique->isModeration() == false)
             {
                 $this->addFlash('error', 'Nous allons vérifier votre musique');
+    
+                $email = (new Email())
+                ->from($musique->getUser()->getEmail())
+                ->to('admin@v2vmusic.fr')
+                ->subject('No-Reply - Modération de musique')
+                ->text('Une nouvelle musique ' .  $musique->getTitre() . ' a été importée par ' . ' ' . $musique->getUser()->getPseudo() . 'Merci de bien vouloir la vérifier');
+    
+                $mailer->send($email);
                 
             }
             $repo->save($musique,true);
@@ -67,31 +78,46 @@ class MusiqueController extends AbstractController
         ]);
     }
 //-----------------------------GESTION DES MUSIQUES COTE USER-------------------------------------
-    #[Route('/all_musique_{id}', name: 'app_all_musique')]
-    public function All($id, MusiqueRepository $repo)
+    #[Route('/profile/all_musique_{id}', name: 'app_all_musique')]
+    public function All( MusiqueRepository $repo, TokenInterface $token )
     {
-        $musiques = $repo->find($id);
+        // if( $this->getUser()  !== $token->getUser() ){
+
+        //     return $this->redirectToRoute('app_home');
+        // }
+        
+
+        $musique = $repo->find($this->getUser());
 
         return $this->render('musique/allMusique.html.twig', 
         [
-            'musiques' => $musiques
+            'musiques' => $musique
         ]);
     }
 
 
     #[Route('/profile/delete_musique_{id}', name: 'app_delete_musique')]
-    public function delete($id, MusiqueRepository $repo, User $user)
+    public function delete( MusiqueRepository $repo, Musique $musiques)
     {
-        $musique = $repo->find($id);
+        if($this->getUser() !== $musiques->getUser()){
+            return $this->redirectToRoute('app_home');
+        }
+        $musique = $repo->find($musiques->getId());
         $repo->remove( $musique , 1);
 
-        return $this->redirectToRoute('app_profil', array('id'=>$user->getId()));
+
+        return $this->redirectToRoute('app_all_musique', array('id'=>$this->getUser()));
     }
     
     #[Route('/profile/update_musique_{id}', name: 'app_update_musique')]
-    public function update($id, MusiqueRepository $repo, Request $request, SluggerInterface $slugger, User $user)
+    public function update(MusiqueRepository $repo, Request $request, SluggerInterface $slugger, Musique $musiques)
     {
-        $musique= $repo->find($id);
+
+        if($this->getUser() !== $musiques->getUser()){
+            return $this->redirectToRoute('app_home');
+        }
+        
+        $musique= $repo->find($musiques->getId());
         $form=$this->createForm(MusiqueType::class, $musique);
         $form->handleRequest($request);
 
@@ -117,7 +143,7 @@ class MusiqueController extends AbstractController
             }
            
             $repo->save($musique,true);
-            return $this->redirectToRoute('app_profil', array('id'=>$user->getId()));
+            return $this->redirectToRoute('app_all_musique', array('id'=>$this->getUser()));
 
         }
 
@@ -129,9 +155,9 @@ class MusiqueController extends AbstractController
 //---------------------------MUSIQUE PAR GENRE --------------------------------------------------
 
     #[Route('/musique_genre_{id}', name: 'app_musique_genre')]
-    public function musiqueByGenre($id, GenreRepository $repo,)
+    public function musiqueByGenre(GenreRepository $repo, Genre $genres)
     {
-        $genre = $repo->find($id);
+        $genre = $repo->find($genres->getId());
         $musiques= $genre->getMusiques();
         $genres = $repo->findAll();
 
@@ -139,15 +165,18 @@ class MusiqueController extends AbstractController
             'genres'=>$genres,
             'musiques'=>$musiques,
             'genre' =>$genre,
+            
         ]);
     }
 
     //-----------------------ECOUTE D'UNE MUSIQUE--------------------------------
 
     #[Route('/oneMusique_{id}', name: 'app_oneMusique')]
-    public function OneMusique($id, MusiqueRepository $repo, Musique $musique, CommentaireRepository $comRepo)
+    public function OneMusique(MusiqueRepository $repo, Musique $musiques)
     {
-        $musique = $repo->find($id);
+        $musique = $repo->find($musiques->getId());
+        $commentaires = $musique->getCommentaires();
+        $musiques = $repo->findAll();
         $favoris = $repo->findOneBy([
             'user'=> $this->getUser()
         ]);
@@ -155,6 +184,7 @@ class MusiqueController extends AbstractController
         return $this->render('musique/oneMusique.html.twig', [
             'musique'=>$musique,
             'favoris'=>$favoris,
+            'commentaires' => $commentaires
 
 
         ]);
@@ -162,11 +192,17 @@ class MusiqueController extends AbstractController
     //--------------------------GESTION ADMIN---------------------------------------
 
     #[Route('/admin/allMusiques', name: 'app_allMusiques')]
-    public function MusiqueAdmin(MusiqueRepository $repo, GenreRepository $genreRepo)
+    public function MusiqueAdmin(MusiqueRepository $repo, PaginatorInterface $paginator, Request $request)
     {
         $musiques = $repo->findAll();
+        $pagination =  $paginator->paginate(
+            $musiques,
+            $request->query->getInt('page', 1),
+            5,
+        );
         return $this->render('musique/musiqueAdmin.html.twig', [
             'musique'=>$musiques,
+            'pagination'=>$pagination
         ]);
     }
 
@@ -175,7 +211,8 @@ class MusiqueController extends AbstractController
     {
         $musique = $repo->find($id);
         $repo->remove( $musique , 1);
-
+      
+        
         return $this->redirectToRoute('app_allMusique');
     }
     //-------------------------AJOUT et RETRAIT FAVORIS-----------------------------
@@ -210,54 +247,7 @@ class MusiqueController extends AbstractController
 
 
 
-    //----------------------------AFFICHAGE FAVORIS-------------------------------------
-    #[Route('/profile/favoris_{id}', name: 'app_affichage_favoris')]
-    public function afficherFavoris($id, UserRepository $repo)
-    {
-        $user= $repo->find($id);
-        $favoris = $user->getFavoris(); 
+   
 
-        return $this->render('musique/favoris.html.twig', [
-            'user'=> $user,
-            'favoris'=>$favoris
-
-        ]);
-    }
-    //-----------------------------------SIGNALEMENT----------------------------------------------
-
-    #[Route('/signalement/{id}', name: 'app_signalement')]
-    public function signalement($id,Request $request, MailerInterface $mailer, MusiqueRepository $repo )
-    {
-        $form= $this->createForm(SignalType::class);
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid())
-        {
-            $data= $form->getData();
-            $adresse = $data['email'];
-            $content= $data['contenu'];
-            $sujet=$data['sujet'];
-            $musique= $repo->find($id);
-            $name= $musique->getTitre();
-            
-            
-            $email = (new Email())
-            ->from($adresse)
-            ->to('admin@v2vmusic.fr')
-            ->subject('Signalement pour' . $sujet)
-            ->text('La musique concernée est' . ' '. $name . '. ' . $content);
-
-            $mailer->send($email);
-            $this->addFlash('success', 'Votre message a été envoyé');
-
-            return $this->redirectToRoute('app_home');
-        }
-
-
-        return $this->render('musique/formSignal.html.twig', [
-            'formSignal' => $form->createView(),
-        ]);
-    }
-    
 
 }

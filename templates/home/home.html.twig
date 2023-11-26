@@ -15,7 +15,11 @@
            {% for user in activeUsers %}
                 <a href="{{path('app_view_profil', {id: user.id})}}">
                     <figure>
-                        <img src="{{asset('photo/profil/' ~ user.photo)}}" alt="{{user.photo}}" width="120" height="120">
+                        {% if user.photo == 'profil.png' %}
+                        <img src="{{asset('img/profil.png')}}" alt="photo" width="120" height="120">
+                        {% else %}
+                         <img src="{{asset('photo/profil/' ~ user.photo)}}" alt="{{user.photo}}" width="120" height="120">
+                        {% endif %}
                         <figcaption>{{user.pseudo}}</figcaption>
                     </figure>
                 </a>

@@ -44,10 +44,14 @@ class Musique
     #[ORM\OneToMany(mappedBy: 'musique', targetEntity: Commentaire::class)]
     private Collection $commentaires;
 
+    #[ORM\OneToMany(mappedBy: 'musique', targetEntity: Signalement::class)]
+    private Collection $signalements;
+
     public function __construct()
     {
         $this->favoris = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
+        $this->signalements = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -188,6 +192,36 @@ class Musique
             // set the owning side to null (unless already changed)
             if ($commentaire->getMusique() === $this) {
                 $commentaire->setMusique(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Signalement>
+     */
+    public function getSignalements(): Collection
+    {
+        return $this->signalements;
+    }
+
+    public function addSignalement(Signalement $signalement): static
+    {
+        if (!$this->signalements->contains($signalement)) {
+            $this->signalements->add($signalement);
+            $signalement->setMusique($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSignalement(Signalement $signalement): static
+    {
+        if ($this->signalements->removeElement($signalement)) {
+            // set the owning side to null (unless already changed)
+            if ($signalement->getMusique() === $this) {
+                $signalement->setMusique(null);
             }
         }
 

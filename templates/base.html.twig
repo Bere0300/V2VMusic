@@ -12,10 +12,10 @@
         <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@300&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{{asset('CSS/style.css')}}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-
     {% endblock %}
+
     <title>{% block title %}{% endblock %}</title>
+    
 </head>
 <body>      
      <header>
@@ -72,6 +72,9 @@
                                         </li>
                                         <li class="dropdown-link">
                                             <a href="{{path('app_allUsers')}}">Gestion des utilisateurs</a>
+                                        </li>
+                                        <li class="dropdown-link">
+                                            <a href="{{path('app_allCommentaires')}}">Gestion des commentaires</a>
                                         </li>
                                         <div class="arrow"></div>
                                     </ul>
@@ -132,14 +135,14 @@
 
     <footer>
     <div class='footer_titre'>
-        <a href="{{path('app_mentions')}}"><h5>Mentions Légales </h5></a>
+        <a href="{{path('app_mentions')}}" target="_blank"><h5>Mentions Légales </h5></a>
         <h5>|</h5>
         <a href="{{path('app_contact')}}"><h5>Nous contacter</h5></a>  
     </div>
     <div class="reseau">
     <a href="https://www.instagram.com/v_2_vmusic/"><img src="{{asset('img/instagram.png')}}" alt="instagram" width='50'></a>
     </div>
-       
+    <p style="text-align:center;"> &copy; V2V Music | Tous droit réservés</p>
     </footer>
            
 

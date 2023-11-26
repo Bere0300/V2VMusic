@@ -30,8 +30,11 @@
       {% endfor %}
   </table>
 
-
+{% if app.request.get('_route') == "app_update_genre" %}
+  <h1>Modifier le genre</h1>
+{% else %}
 <h1>Ajouter un genre</h1>
+{% endif %}
 <div class="main">
 
 {{ form_start(formGenre) }}

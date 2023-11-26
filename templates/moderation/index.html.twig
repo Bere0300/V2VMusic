@@ -21,7 +21,7 @@
         <th scope="col">Genre</th>
         <th scope="col">Moderation</th>
       </tr>
-      {% for musique in musique %}
+      {% for musique in musiques %}
         {% if musique.moderation == 0 %}
             <tr>
                 <td><img src="{{asset('photo/musique/' ~ musique.photo)}}" alt="{{musique.photo}}" width="50"></td>
@@ -32,6 +32,9 @@
             </tr>
         {% endif %}
       {% endfor %}
+      <td></td>
+      <td></td>
+      <td>{{knp_pagination_render(musiques)}}</td>
   </table>
 
 {% endblock %}

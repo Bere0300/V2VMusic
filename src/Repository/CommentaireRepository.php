@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Commentaire;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Commentaire>
@@ -16,7 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CommentaireRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private PaginatorInterface $paginator)
     {
         parent::__construct($registry, Commentaire::class);
     }
@@ -38,6 +40,22 @@ class CommentaireRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+     /**
+    * @param int $page
+    * @return PaginatorInterface
+    */
+   public function findCommentaires(int $page): PaginationInterface
+   {
+       $data= $this->createQueryBuilder('c')
+           ->orderBy('c.dateDeCreation', 'DESC')
+           ->getQuery()
+           ->getResult();
+
+        $commentaires = $this->paginator->paginate($data,$page,5,);
+
+        return $commentaires;
+   }
 
 //    /**
 //     * @return Commentaire[] Returns an array of Commentaire objects
